@@ -1,6 +1,6 @@
 # miasteczko
 
-## Build indtructions
+## Build instructions
 [linux] On the command line, enter:
 ````
 cmake .
