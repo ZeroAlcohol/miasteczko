@@ -40,6 +40,7 @@ build/*
 # cmake
 Cmake*
 cmake
+!CMakeLists.txt
 
 # IDE
 *.vscode
