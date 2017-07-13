@@ -39,8 +39,9 @@ build/*
 
 # cmake
 Cmake*
-cmake
+cmake*
 !CMakeLists.txt
+!cmake_modules
 
 # IDE
 *.vscode
