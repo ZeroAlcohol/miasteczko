@@ -4,5 +4,9 @@
 [linux] On the command line, enter:
 ````
 cmake .
-make
+make -j4
+
+
+./miasteczko - run game
+./miasteczkoUT - run tests
 ````
