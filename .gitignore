@@ -33,6 +33,7 @@
 
 # build
 build/*
+x64/*
 
 # user
 *.user
@@ -45,3 +46,7 @@ cmake*
 
 # IDE
 *.vscode
+*vcxproj*
+*sdf
+*sln
+*VC.opendb
