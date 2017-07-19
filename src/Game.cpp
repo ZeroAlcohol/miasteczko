@@ -12,7 +12,7 @@ bool Game::createGame()
     return true;
 }
 
-void Game::run()
+void Game::mainRun()
 {
     while (m_window.isOpen())
     {
@@ -26,4 +26,26 @@ void Game::run()
         m_window.display();
 
     }
+}
+
+void Game::physicsIteration()
+{
+	for (auto t = m_activeObjects.begin(); t != m_activeObjects.end(); t++)
+	{
+		(*t)->run();
+	}
+}
+
+void Game::renderIteration()
+{
+	for (auto& t : m_activeObjects)
+	{
+		t->render();
+	}
+
+	for (auto& t : m_passiveObjects)
+	{
+		t->render();
+	}
+
 }

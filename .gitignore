@@ -33,20 +33,16 @@
 
 # build
 build/*
-x64/*
 
 # user
 *.user
 
 # cmake
 Cmake*
-cmake*
-!CMakeLists.txt
-!cmake_modules
+cmake
 
 # IDE
 *.vscode
-*vcxproj*
-*sdf
-*sln
-*VC.opendb
+
+#SFML Library (default folder name)
+SFML-2.4.2/*

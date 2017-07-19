@@ -7,6 +7,6 @@ auto main(int argc, char* argv[]) -> int
     Game game;
 
     if(game.createGame())
-        game.run();
+        game.mainRun();
 
 }
