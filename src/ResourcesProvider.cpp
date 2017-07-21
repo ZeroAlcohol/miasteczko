@@ -23,11 +23,6 @@ ResourcesProvider &ResourcesProvider::getInstance()
     return instance;
 }
 
-ResourcesProvider::ResourcesProvider()
-{
-
-}
-
 ResourcesProvider::~ResourcesProvider()
 {
 

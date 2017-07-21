@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "GameObjectLoader.hpp"
 
 Game::Game()
 {
@@ -8,6 +9,8 @@ Game::Game()
 bool Game::createGame()
 {
     m_window.create(sf::VideoMode(600,600), "Game");
+
+    m_activeObjects.push_back(GameObjectLoader().createPlayer());
 
     return true;
 }
@@ -22,7 +25,6 @@ void Game::mainRun()
             if ((m_event.type == sf::Event::Closed) || ((m_event.type == sf::Event::KeyPressed) && (m_event.key.code==sf::Keyboard::Escape)))
                     m_window.close();
         }
-
         m_window.display();
 
     }

@@ -7,7 +7,7 @@ class IObject
 public:
 	virtual void run() = 0;
 	virtual void render() = 0;
-	virtual ~IObject();
+    virtual ~IObject(){}
 
 private:
 	std::pair<int, int> m_xy;

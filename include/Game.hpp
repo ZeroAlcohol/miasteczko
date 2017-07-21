@@ -1,10 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
-#include <list>
 #include <SFML/Graphics.hpp>
-#include "Player.hpp"
 #include "IObject.hpp"
 #include <memory>
+#include <list>
 
 class Game
 {

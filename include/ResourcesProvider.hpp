@@ -19,7 +19,7 @@ public:
     static ResourcesProvider& getInstance();
 
 private:
-    ResourcesProvider();
+    ResourcesProvider() {}
      ~ResourcesProvider();
     std::map<std::string, sf::Texture> m_textureMap;
 
