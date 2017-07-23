@@ -1,5 +1,6 @@
 #include "Game.hpp"
-#include "GameObjectLoader.hpp"
+#include "GameObjectFactory.hpp"
+#include "TextureContainer.hpp"
 
 Game::Game()
 {
@@ -10,13 +11,16 @@ bool Game::createGame()
 {
     m_window.create(sf::VideoMode(600,600), "Game");
 
-    m_activeObjects.push_back(GameObjectLoader().createPlayer());
+    m_activeObjects.push_back(GameObjectFactory().createPlayer());
+    TextureContainer::createResources();
+
 
     return true;
 }
 
 void Game::mainRun()
 {
+    auto& resource = TextureContainer::getInstance();
     while (m_window.isOpen())
     {
 

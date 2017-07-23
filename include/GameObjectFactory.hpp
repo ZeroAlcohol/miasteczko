@@ -1,12 +1,12 @@
-#ifndef GAME_OBJECT_LOADER_H
-#define GAME_OBJECT_LOADER_H
+#ifndef GAME_OBJECT_FACTORY_H
+#define GAME_OBJECT_FACTORY_H
 #include "Player.hpp"
 #include <memory>
 
-class GameObjectLoader
+class GameObjectFactory
 {
 public:
-    GameObjectLoader() {}
+    GameObjectFactory() {}
     std::unique_ptr<Player> createPlayer();
 
 };
