@@ -22,7 +22,7 @@ void Player::run()
 
 }
 
-void Player::render()
+void Player::render(sf::RenderWindow& p_window)
 {
 
 }

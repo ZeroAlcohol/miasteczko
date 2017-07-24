@@ -45,12 +45,12 @@ void Game::renderIteration()
 {
 	for (auto& t : m_activeObjects)
 	{
-		t->render();
+        t->render(m_window);
 	}
 
 	for (auto& t : m_passiveObjects)
 	{
-		t->render();
+        t->render(m_window);
 	}
 
 }

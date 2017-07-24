@@ -10,7 +10,7 @@ public:
     ~Player();
     std::string getName();
     void run() override;
-    void render() override;
+    void render(sf::RenderWindow& p_window) override;
 private:
     std::string m_name;
 };
