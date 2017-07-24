@@ -10,8 +10,10 @@ class TextureContainer
 public:
     static void createResources();
 
-    sf::Texture& getImage(std::string p_name);
-    void putImage(std::string p_name, std::string p_adresImage);
+    sf::Texture& getTexture(std::string p_name);
+    void putTexture(std::string p_name, std::string p_adresImage);
+
+    sf::Sprite& getSprite(std::string p_name);
 
     TextureContainer(const TextureContainer&) = delete;
     TextureContainer& operator=(const TextureContainer&) = delete;
@@ -22,6 +24,7 @@ private:
     TextureContainer() {}
      ~TextureContainer();
     std::map<std::string, sf::Texture> m_textureMap;
+    std::map<std::string, sf::Sprite> m_spriteMap;
 
 };
 

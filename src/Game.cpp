@@ -10,10 +10,8 @@ Game::Game()
 bool Game::createGame()
 {
     m_window.create(sf::VideoMode(600,600), "Game");
-
     m_activeObjects.push_back(GameObjectFactory().createPlayer());
     TextureContainer::createResources();
-
 
     return true;
 }
@@ -21,6 +19,7 @@ bool Game::createGame()
 void Game::mainRun()
 {
     auto& resource = TextureContainer::getInstance();
+
     while (m_window.isOpen())
     {
 

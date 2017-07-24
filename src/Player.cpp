@@ -18,7 +18,7 @@ std::string Player::getName()
 
 void Player::run()
 {
-    std::cout<< "my name is "<< m_name <<std::endl;
+   // std::cout<< "my name is "<< m_name <<std::endl;
 
 }
 
