@@ -1,21 +1,15 @@
-#include "..\include\TextFactory.h"
+#include "TextFactory.h"
 
 
-bool TextFactory::createText(sf::String p_text, int p_scale, sf::Color p_color) 
+sf::Text TextFactory::createText(std::string p_text, int p_scale, std::string p_font) 
 {
-	if (!m_font.loadFromFile("arial.ttf"))
-	{
-		do 
-		{
-			m_font.loadFromFile("arial.ttf");
-		} 
-		while (m_font.loadFromFile("arial.ttf"));
-	}
-
+	m_font.loadFromFile(p_font);
+		
 	m_text.setFont(m_font);
 	m_text.setCharacterSize(m_text.getCharacterSize() * p_scale);
 	m_text.setString(p_text);	
-	//m_text.setColor(p_color);
+	
+	return m_text;
 }
 
 TextFactory::TextFactory()
