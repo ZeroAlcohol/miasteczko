@@ -3,8 +3,13 @@ file(GLOB_RECURSE TESTS "*.cpp")
 file(GLOB_RECURSE SOURCES "../src/*.cpp")
 list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/../src/main.cpp")
 
-set(EXECUTABLE_NAME "miasteczko-ut-tests")
+set(EXECUTABLE_TESTS_NAME "miasteczko-ut-tests")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin-tests")
 
-add_executable(${EXECUTABLE_NAME} ${SOURCES} ${TESTS})
-target_link_libraries(${EXECUTABLE_NAME} ${SFML_LIBRARIES})
+add_executable(${EXECUTABLE_TESTS_NAME} ${SOURCES} ${TESTS})
+target_link_libraries(${EXECUTABLE_TESTS_NAME} ${SFML_LIBRARIES})
+
+if(MSVC)
+	file(COPY ${DEBUG_DLLS} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug)
+	file(COPY ${RELEASE_DLLS} DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release)
+endif()

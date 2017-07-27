@@ -13,7 +13,7 @@ make -j4
 ```
 
 [windows] 
-* set environment variable SFML_ROOT
+* set environment variable SFML_ROOT (sfml library location)
 * On the command line, enter
   ````
   cmake -G "Visual Studio 14 2015 Win64" CMakeList.txt_localization
