@@ -1,5 +1,6 @@
-#pragma once
-#include "SFML\Graphics.hpp"
+#ifndef TEXT_FACTORY_H
+#define TEXT_FACTORY_H
+#include "SFML/Graphics.hpp"
 
 class TextFactory
 {
@@ -14,3 +15,4 @@ private:
 	sf::Font m_font;
 };
 
+#endif

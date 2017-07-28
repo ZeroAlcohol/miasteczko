@@ -4,7 +4,6 @@
 #include "IObject.hpp"
 #include <memory>
 #include <list>
-#include "TextFactory.h"
 
 class Game
 {

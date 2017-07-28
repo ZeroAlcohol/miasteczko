@@ -1,4 +1,4 @@
-#include "TextFactory.h"
+#include "TextFactory.hpp"
 
 
 sf::Text TextFactory::createText(std::string p_text, int p_scale, std::string p_font) 

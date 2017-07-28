@@ -8,7 +8,3 @@ std::unique_ptr<Player> GameObjectFactory::createPlayer()
     return std::move(l_player);
 }
 
-FpsCounter GameObjectFactory::createFpsCounter()
-{
-    return FpsCounter();
-}
