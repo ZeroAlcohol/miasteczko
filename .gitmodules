@@ -1,0 +1,6 @@
+[submodule "external/easyloggingpp"]
+	path = external/easyloggingpp
+	url = https://github.com/muflihun/easyloggingpp
+[submodule "external/Catch"]
+	path = external/Catch
+	url = https://github.com/philsquared/Catch
