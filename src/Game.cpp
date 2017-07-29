@@ -1,3 +1,6 @@
+#include <chrono>
+#include <cmath>
+#include "resources.textures.hpp"
 #include "Game.hpp"
 #include "GameObjectFactory.hpp"
 #include "TextureContainer.hpp"
@@ -21,6 +24,10 @@ void Game::mainRun()
 {
     auto& resource = TextureContainer::getInstance();
 
+	// temporary
+	sf::Sprite l_exampleSprite = TextureContainer::getSprite(rs::tx::vodka);
+	l_exampleSprite.setPosition(sf::Vector2f(125, 70));
+	
     while (m_window.isOpen())
     {
 
@@ -29,6 +36,15 @@ void Game::mainRun()
             if ((m_event.type == sf::Event::Closed) || ((m_event.type == sf::Event::KeyPressed) && (m_event.key.code==sf::Keyboard::Escape)))
                     m_window.close();
         }
+
+		m_window.clear();
+
+		auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+		float scale = 1.0f + std::sin(ms.count()/50)*0.2f;
+		l_exampleSprite.setScale(sf::Vector2f(scale, scale));
+
+		m_window.draw(l_exampleSprite);
+
         m_window.display();
 
     }

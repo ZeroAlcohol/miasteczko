@@ -1,8 +1,8 @@
 #ifndef TEXTURE_CONTAINER_H
 #define TEXTURE_CONTAINER_H
+#include <map>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <map>
 
 
 class TextureContainer
@@ -13,7 +13,7 @@ public:
     sf::Texture& getTexture(std::string p_name);
     void putTexture(std::string p_name, std::string p_adresImage);
 
-    sf::Sprite& getSprite(std::string p_name);
+    static sf::Sprite& getSprite(std::string p_name);
 
     TextureContainer(const TextureContainer&) = delete;
     TextureContainer& operator=(const TextureContainer&) = delete;
