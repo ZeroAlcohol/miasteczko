@@ -10,6 +10,19 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_APP_NAME "miasteczko-app")
 
+find_path(ELPP_INCLUDE_DIR easylogging++.h
+          PATH_SUFFIXES src
+          PATHS ${CMAKE_SOURCE_DIR}/external/easyloggingpp)
+
+if((NOT ELPP_INCLUDE_DIR) OR (NOT EXISTS ${ELPP_INCLUDE_DIR}))
+	execute_process(COMMAND git submodule update --init -- external/easyloggingpp
+                    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+	set(ELPP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/easyloggingpp/src)
+endif()
+
+include_directories(${ELPP_INCLUDE_DIR})
+list(APPEND SOURCES ${ELPP_INCLUDE_DIR}/easylogging++.cc)
+
 add_executable(${EXECUTABLE_APP_NAME} ${SOURCES})
 target_link_libraries(${EXECUTABLE_APP_NAME} ${SFML_LIBRARIES})
 

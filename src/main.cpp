@@ -1,16 +1,19 @@
+#include "config.hpp"
 #include <iostream>
+#include <easylogging++.h>
 #include <Game.hpp>
+
+INITIALIZE_EASYLOGGINGPP;
 
 using namespace std;
 
-#if defined WIN32 && defined NDEBUG 
-auto WinMain(int argc, char *argv[]) -> int
-#else
-auto main(int argc, char *argv[]) -> int
-#endif // WIN32
+void _main()
 {
+	el::Loggers::reconfigureAllLoggers(el::Configurations(EASYLOGGINGPP_CONFIG));
+	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
+
 #ifndef NDEBUG
-    cout << "Application is running in debug mode" << endl;
+	LOG(INFO) << "Application is running in debug mode";
 #endif
 
 	cout << R"banner( 
@@ -21,10 +24,27 @@ auto main(int argc, char *argv[]) -> int
 	| || || | ( ( | |___ | |_( (/ ( (___ / __/| |< ( |_| |
 	|_||_||_|_|\_||_(___/ \___)____)____|_____)_| \_)___/
 			 
-			by ZeroAlcohol 2017 (WIP))banner" << endl;
+			by ZeroAlcohol 2017 (WIP)
+)banner" << endl;
 
-    Game game;
+	Game game;
 
-    if (game.createGame())
-        game.mainRun();
+	LOG(DEBUG) << "Game created";
+
+	if (game.createGame())
+		game.mainRun();
 }
+
+#if defined WIN32 && defined NDEBUG 
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	_main();
+}
+#else
+auto main(int argc, char *argv[]) -> int
+{
+	START_EASYLOGGINGPP(argc, argv);
+	_main();
+}
+#endif // WIN32
+
