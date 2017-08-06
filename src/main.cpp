@@ -1,7 +1,7 @@
 #include "config.hpp"
 #include <iostream>
 #include <easylogging++.h>
-#include <Game.hpp>
+#include <app.hpp>
 
 INITIALIZE_EASYLOGGINGPP;
 
@@ -27,12 +27,11 @@ void _main()
 			by ZeroAlcohol 2017 (WIP)
 )banner" << endl;
 
-	Game game;
+	App app;
 
-	LOG(DEBUG) << "Game created";
+	LOG(DEBUG) << "App created";
 
-	if (game.createGame())
-		game.mainRun();
+	app.run();
 }
 
 #if defined WIN32 && defined NDEBUG 

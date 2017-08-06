@@ -9,19 +9,18 @@ class Game
 {
 public:
     Game();
+	void onEvent(sf::Event & p_event);
+	void renderFrame(sf::RenderWindow & p_window);
+	void update(const float dt);
     bool createGame();
-    void mainRun();
-	void physicsIteration();
-	void renderIteration();
 
 private:
-    sf::RenderWindow m_window;
-    sf::Event m_event;
+	sf::Sprite m_exampleSprite;
 
 	std::list<std::unique_ptr<IObject>> m_activeObjects; //objects which are performing actions during run()
 	std::list<std::unique_ptr<IObject>> m_passiveObjects; //objects which aren't performing actions during run()
-
 	
+
 };
 
 
