@@ -4,6 +4,7 @@
 #include "resources.textures.hpp"
 #include "Game.hpp"
 #include "GameObjectFactory.hpp"
+#include "easylogging++.h"
 
 
 Game::Game()
@@ -35,7 +36,7 @@ void Game::update(const float dt)
 	}
 }
 
-void Game::renderFrame(sf::RenderWindow & p_window)
+void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 {
 	for (auto& t : m_activeObjects)
 	{

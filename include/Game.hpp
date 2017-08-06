@@ -10,7 +10,7 @@ class Game
 public:
     Game();
 	void onEvent(sf::Event & p_event);
-	void renderFrame(sf::RenderWindow & p_window);
+	void renderFrame(sf::RenderWindow & p_window, const float dt);
 	void update(const float dt);
     bool createGame();
 
