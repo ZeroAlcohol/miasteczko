@@ -13,6 +13,7 @@ public:
     void render(sf::RenderWindow& p_window) override;
 private:
     std::string m_name;
+	sf::Sprite m_sprite;
 };
 
 #endif // PLAYER_H

@@ -4,6 +4,7 @@
 #include "resources.textures.hpp"
 #include "Game.hpp"
 #include "GameObjectFactory.hpp"
+#include "passive-game-object-mock.hpp"
 #include "easylogging++.h"
 
 
@@ -17,9 +18,9 @@ bool Game::createGame()
     m_activeObjects.push_back(GameObjectFactory().createPlayer());
 	
 	// temporary
-	m_exampleSprite = TextureContainer::getSprite(rs::tx::vodka);
-	m_exampleSprite.setPosition(sf::Vector2f(125, 70));
-
+	m_passiveObjects.push_back(GameObjectFactory().createPassiveObjectMock(200, 100, 100, 100, 50, { 255, 0, 0 }));
+	m_passiveObjects.push_back(GameObjectFactory().createPassiveObjectMock(800, 120, 100, 300, 75, { 0, 255, 0 }));
+	m_passiveObjects.push_back(GameObjectFactory().createPassiveObjectMock(700, 320, 150, 150, 0, { 0, 0, 255 }));
     return true;
 }
 
@@ -38,18 +39,17 @@ void Game::update(const float dt)
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 {
-	for (auto& t : m_activeObjects)
-	{
-        t->render(p_window);
-	}
+	// here render backround
 
 	for (auto& t : m_passiveObjects)
 	{
         t->render(p_window);
 	}
 
-	auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-	float scale = 1.0f + std::sin(ms.count() / 50)*0.2f;
-	m_exampleSprite.setScale(sf::Vector2f(scale, scale));
-	p_window.draw(m_exampleSprite);
+	for (auto& t : m_activeObjects)
+	{
+		t->render(p_window);
+	}
+
+	// here render hud
 }
