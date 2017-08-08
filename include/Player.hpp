@@ -14,6 +14,7 @@ public:
 private:
     std::string m_name;
 	sf::Sprite m_sprite;
+    std::unique_ptr<sf::RenderTexture> l_renderTexture; //temporary
 };
 
 #endif // PLAYER_H

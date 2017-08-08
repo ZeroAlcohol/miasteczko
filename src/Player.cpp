@@ -5,12 +5,12 @@
 Player::Player(std::string p_name) : m_name(p_name)
 {
 	// temporary
-	sf::RenderTexture * renderTexture = new sf::RenderTexture();
-	if (renderTexture->create(70, 70))
+    l_renderTexture = std::make_unique<sf::RenderTexture>();
+    if (l_renderTexture && l_renderTexture->create(70, 70))
 	{
-		renderTexture->clear({ 255, 255, 255 });
-		renderTexture->display();
-		m_sprite.setTexture(renderTexture->getTexture());
+        l_renderTexture->clear({ 255, 255, 255 });
+        l_renderTexture->display();
+        m_sprite.setTexture(l_renderTexture->getTexture());
 		m_sprite.setPosition(300, 300);
 	}
 }

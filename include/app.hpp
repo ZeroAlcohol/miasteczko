@@ -12,7 +12,7 @@ public:
 
 private:
 	void renderFrame();
-	uint64_t getMicros() const;
+    uint64_t getMicrosecondsFromStart() const;
 	void wait();
 
 	std::chrono::high_resolution_clock::time_point m_startupTimestamp;

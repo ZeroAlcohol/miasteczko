@@ -3,7 +3,7 @@
 #include <easylogging++.h>
 #include <app.hpp>
 
-INITIALIZE_EASYLOGGINGPP;
+INITIALIZE_EASYLOGGINGPP
 
 using namespace std;
 
@@ -12,9 +12,9 @@ void _main()
 	el::Loggers::reconfigureAllLoggers(el::Configurations(EASYLOGGINGPP_CONFIG));
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
-#ifndef NDEBUG
+    #ifndef NDEBUG
 	LOG(INFO) << "Application is running in debug mode";
-#endif
+    #endif
 
 	cout << R"banner( 
 	 ______  _                                 _          
@@ -25,7 +25,7 @@ void _main()
 	|_||_||_|_|\_||_(___/ \___)____)____|_____)_| \_)___/
 			 
 			by ZeroAlcohol 2017 (WIP)
-)banner" << endl;
+    )banner" << endl;
 
 	App app;
 
