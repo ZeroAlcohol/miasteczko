@@ -24,6 +24,21 @@ endif()
 
 include_directories(${CATCH_INCLUDE_DIR})
 
+
+find_path(ELPP_INCLUDE_DIR easylogging++.h
+          PATH_SUFFIXES src
+          PATHS ${CMAKE_SOURCE_DIR}/external/easyloggingpp)
+
+if((NOT ELPP_INCLUDE_DIR) OR (NOT EXISTS ${ELPP_INCLUDE_DIR}))
+	execute_process(COMMAND git submodule update --init -- external/easyloggingpp
+                    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+	set(ELPP_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/easyloggingpp/src)
+endif()
+
+include_directories(${ELPP_INCLUDE_DIR})
+list(APPEND SOURCES ${ELPP_INCLUDE_DIR}/easylogging++.cc)
+
+
 add_executable(${EXECUTABLE_TESTS_NAME} ${SOURCES} ${TESTS})
 target_link_libraries(${EXECUTABLE_TESTS_NAME} ${SFML_LIBRARIES})
 
