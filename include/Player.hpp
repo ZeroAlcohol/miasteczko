@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <string>
+#include <memory>
 #include "IObject.hpp"
 
 class Player : public IObject
