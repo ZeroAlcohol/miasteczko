@@ -2,7 +2,9 @@
 #define PLAYER_H
 #include <string>
 #include <memory>
+#include <vector>
 #include "IObject.hpp"
+#include "AnimatedSprite.hpp"
 
 class Player : public IObject
 {
@@ -14,7 +16,7 @@ public:
     void render(sf::RenderWindow& p_window) override;
 private:
     std::string m_name;
-	sf::Sprite m_sprite;
+    AnimatedSprite m_animatedSprite;
     std::unique_ptr<sf::RenderTexture> l_renderTexture; //temporary
 };
 

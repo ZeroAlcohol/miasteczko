@@ -10,9 +10,12 @@ Player::Player(std::string p_name) : m_name(p_name)
 	{
         l_renderTexture->clear({ 255, 255, 255 });
         l_renderTexture->display();
-        m_sprite.setTexture(l_renderTexture->getTexture());
-		m_sprite.setPosition(300, 300);
+        m_animatedSprite.setOrigin(35,35);
+        m_animatedSprite.setTexture(l_renderTexture->getTexture());
+        m_animatedSprite.setPosition(300, 300);
+        m_animatedSprite.setOldPosstion(m_animatedSprite.getPosition());
 	}
+
 }
 
 Player::~Player()
@@ -35,19 +38,23 @@ void Player::run()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
 		l_dirx = -1;
+        m_animatedSprite.setDirection(AnimatedSprite::Direction::LEFT);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
 		l_dirx = 1;
+         m_animatedSprite.setDirection(AnimatedSprite::Direction::RIGHT);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		l_diry = -1;
-	}
+         m_animatedSprite.setDirection(AnimatedSprite::Direction::UP);
+    }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		l_diry = 1;
+         m_animatedSprite.setDirection(AnimatedSprite::Direction::DOWN);
 	}
 
 	bool l_move = l_dirx || l_diry;
@@ -55,11 +62,14 @@ void Player::run()
 	if (l_move)
 	{
 		double angle = std::atan2(l_diry, l_dirx);
-		m_sprite.move(std::cos(angle) * l_speed, std::sin(angle) * l_speed);
+        m_animatedSprite.move(std::cos(angle) * l_speed, std::sin(angle) * l_speed);
+
 	}
 }
 
 void Player::render(sf::RenderWindow& p_window)
 {
-	p_window.draw(m_sprite);
+        m_animatedSprite.moveAnimation();
+        p_window.draw(m_animatedSprite);
 }
+
