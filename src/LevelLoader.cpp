@@ -30,6 +30,7 @@ Level LevelLoader::load(const std::string p_id)
 		LOG(ERROR) << "One of passive objects can't be loaded!";
 		return l_level;
 	}
-
+	
+	l_level.id = p_id;
 	return l_level;
 }
