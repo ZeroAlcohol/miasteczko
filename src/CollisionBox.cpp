@@ -9,11 +9,11 @@ CollisionBox::CollisionBox(std::vector<std::pair<float, float> > p_points)
 {
 	if (p_points.size() == 2)
 	{
-		m_figureType = circle;
+		m_figureType = figureType::circle;
 	}
 	if (p_points.size() == 4)
 	{
-		m_figureType = rectangle;
+		m_figureType = figureType::rectangle;
 	}
 
 	m_points = p_points;
@@ -81,7 +81,7 @@ bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, con
 
 float CollisionBox::calculateRadius()
 {
-	if (m_figureType == circle)
+	if (m_figureType == figureType::circle)
 	{
 		return distancePointPoint(m_points[0], m_points[1]);
 	}
@@ -94,22 +94,22 @@ float CollisionBox::calculateRadius()
 
 bool CollisionBox::detectCollision(const CollisionBox& p_a)
 {
-	if (m_figureType == circle && p_a.m_figureType == circle)
+	if (m_figureType == figureType::circle && p_a.m_figureType == figureType::circle)
 	{
 		return collisionCircleCircle(*this, p_a);
 	}
 
-	if (m_figureType == circle && p_a.m_figureType == rectangle)
+	if (m_figureType == figureType::circle && p_a.m_figureType == figureType::rectangle)
 	{
 		return collisionCircleRectangle(*this, p_a);
 	}
 
-	if (m_figureType == rectangle && p_a.m_figureType == circle)
+	if (m_figureType == figureType::rectangle && p_a.m_figureType == figureType::circle)
 	{
 		return collisionCircleRectangle(p_a, *this);
 	}
 
-	if (m_figureType == rectangle && p_a.m_figureType == rectangle)
+	if (m_figureType == figureType::rectangle && p_a.m_figureType == figureType::rectangle)
 	{
 		return collisionRectangleRectangle(*this, p_a);
 	}

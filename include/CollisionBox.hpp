@@ -7,7 +7,7 @@
 
 class CollisionBox
 {
-	enum figuretype {circle, rectangle};
+	enum class figureType {circle, rectangle};
 
 public:
 	CollisionBox();
@@ -24,7 +24,7 @@ public:
 
 private:
 	std::vector <std::pair <float, float> > m_points; //in case of circle one point is center second point is one from edge
-	int m_figureType;
+	figureType m_figureType;
 
 	float distancePointPoint(const std::pair<float, float>& p_a, const std::pair<float, float>& p_b);
 	float distancePointLine(const std::pair<float, float>& p_point, const std::pair<float, float>& p_line1, const std::pair<float, float>& p_line2);
