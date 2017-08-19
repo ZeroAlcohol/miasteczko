@@ -2,6 +2,8 @@
 #include <iostream>
 #include <easylogging++.h>
 #include <app.hpp>
+#include "CollisionBox.hpp"
+
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -12,9 +14,9 @@ void _main()
 	el::Loggers::reconfigureAllLoggers(el::Configurations(EASYLOGGINGPP_CONFIG));
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
-    #ifndef NDEBUG
+#ifndef NDEBUG
 	LOG(INFO) << "Application is running in debug mode";
-    #endif
+#endif
 
 	cout << R"banner( 
 	 ______  _                                 _          

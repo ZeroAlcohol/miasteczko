@@ -19,18 +19,24 @@ CollisionBox::CollisionBox(std::vector<std::pair<float, float> > p_points)
 	m_points = p_points;
 }
 
+CollisionBox::CollisionBox(CollisionBox & a)
+{
+	m_figureType = a.m_figureType;
+	m_points = a.m_points;
+}
+
 CollisionBox::~CollisionBox()
 {
 
 }
 
-float CollisionBox::distancePointPoint(const std::pair<float, float>& p_a,const std::pair<float, float>& p_b)
+float CollisionBox::distancePointPoint(const std::pair<float, float>& p_a,const std::pair<float, float>& p_b) const
 {
 	return sqrt((p_a.first - p_b.first) * (p_a.first - p_b.first) + (p_a.second - p_b.second) * (p_a.second - p_b.second));
 }
 
 
-float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, const std::pair<float, float>& p_line1,const std::pair<float, float>& p_line2)
+float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, const std::pair<float, float>& p_line1,const std::pair<float, float>& p_line2) const
 {
 	if ( p_line1 == p_line2)
 	{
@@ -51,7 +57,7 @@ float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, co
 
 }
 
-bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, const std::pair<float, float> & p_lineA1, const std::pair<float, float> & p_lineA2, const std::pair<float, float> & p_lineB1, const std::pair<float, float> & p_lineB2)
+bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, const std::pair<float, float> & p_lineA1, const std::pair<float, float> & p_lineA2, const std::pair<float, float> & p_lineB1, const std::pair<float, float> & p_lineB2) const
 {
 	float aA = (p_lineA2.second - p_lineA1.second) / (p_lineA2.first - p_lineA1.first);
 	float bA = p_lineA1.second - aA*p_lineA1.first;
@@ -79,7 +85,7 @@ bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, con
 }
 
 
-float CollisionBox::calculateRadius()
+float CollisionBox::calculateRadius() const
 {
 	if (m_figureType == figureType::circle)
 	{
@@ -118,9 +124,9 @@ bool CollisionBox::detectCollision(const CollisionBox& p_a)
 }
 
 
-bool CollisionBox::collisionCircleCircle(const CollisionBox p_a, const CollisionBox p_b)
+bool CollisionBox::collisionCircleCircle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
-	if (distancePointPoint(p_a.m_points[0], p_b.m_points[0] ) < p_a.calculateRadius + p_b.calculateRadius)
+	if (distancePointPoint(p_a.m_points[0], p_b.m_points[0] ) < p_a.calculateRadius() + p_b.calculateRadius() )
 	{
 		return true;
 	}
@@ -130,9 +136,9 @@ bool CollisionBox::collisionCircleCircle(const CollisionBox p_a, const Collision
 	}
 }
 
-bool CollisionBox::collisionCircleRectangle(const CollisionBox p_a, const CollisionBox p_b)
+bool CollisionBox::collisionCircleRectangle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
-	float l_circleRadius = p_a.calculateRadius;
+	float l_circleRadius = p_a.calculateRadius();
 	for (int i = 0; i < 3; i++)
 	{
 		if (distancePointPoint(p_a.m_points[0], p_b.m_points[i]) < l_circleRadius)
@@ -158,7 +164,7 @@ bool CollisionBox::collisionCircleRectangle(const CollisionBox p_a, const Collis
 }
 
 
-bool CollisionBox::collisionRectangleRectangle(const CollisionBox p_a, const CollisionBox p_b)
+bool CollisionBox::collisionRectangleRectangle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
 	for (int i = 0; i < 3; i++)
 	{
