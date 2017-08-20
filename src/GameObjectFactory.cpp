@@ -14,3 +14,9 @@ std::unique_ptr<PassiveRenderRectangle> GameObjectFactory::createPassiveRenderRe
     return std::move(l_object);
 
 }
+
+std::unique_ptr<PassiveTexturedRectangle> GameObjectFactory::createPassiveTexturedRectangle(float p_x, float p_y, float p_rotation, sf::Sprite p_sprite)
+{
+	std::unique_ptr<PassiveTexturedRectangle> l_object = std::make_unique<PassiveTexturedRectangle>(p_x, p_y, p_rotation, p_sprite);
+	return std::move(l_object);
+}

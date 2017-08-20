@@ -14,8 +14,10 @@ Game::Game()
 
 bool Game::createGame()
 {
-	m_level = LevelLoader().load("exampleLevel");
-    return true;
+	const std::string l_levelId = "level_id";
+	m_level = LevelLoader().load(l_levelId);
+	bool levelLoadedCorrect = m_level.id == l_levelId;
+	return levelLoadedCorrect;
 }
 
 void Game::onEvent(sf::Event & p_event)
@@ -33,7 +35,7 @@ void Game::update(const float dt)
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 {
-	// here render backround
+	p_window.draw(m_level.backgroundSrite);
 
 	for (auto& t : m_level.passiveObjects)
 	{
