@@ -20,7 +20,8 @@ void TextureContainer::createResources()
 
 	instance.putTexturesByKey({ 
 		rs::tx::flowerBox,
-		rs::tx::bench
+        rs::tx::bench,
+        rs::tx::player
 		});
 }
 

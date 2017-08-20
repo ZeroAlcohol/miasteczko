@@ -2,9 +2,9 @@
 
 
 
-std::unique_ptr<Player> GameObjectFactory::createPlayer()
+std::unique_ptr<Player> GameObjectFactory::createPlayer(sf::Sprite p_sprite)
 {
-    std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert");
+    std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert", p_sprite);
     return std::move(l_player);
 }
 

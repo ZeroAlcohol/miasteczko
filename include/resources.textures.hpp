@@ -19,5 +19,6 @@ namespace rs
 
 		constexpr auto flowerBox = "flower-box";
 		constexpr auto bench = "bench";
+        constexpr auto player = "player";
 	}
 }

@@ -4,20 +4,19 @@
 #include <memory>
 #include <vector>
 #include "IObject.hpp"
-#include "AnimatedSprite.hpp"
+#include "Animation.hpp"
 
 class Player : public IObject
 {
 public:
-    Player(std::string p_name);
+    Player(std::string p_name, sf::Sprite p_sprite);
     ~Player();
     std::string getName();
     void run() override;
     void render(sf::RenderWindow& p_window) override;
 private:
     std::string m_name;
-    AnimatedSprite m_animatedSprite;
-    std::unique_ptr<sf::RenderTexture> l_renderTexture; //temporary
+    Animation m_animation;
 };
 
 #endif // PLAYER_H

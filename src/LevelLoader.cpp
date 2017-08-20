@@ -93,7 +93,7 @@ Level LevelLoader::load(const std::string p_id)
 	l_level.backgroundTexture->display();
 	l_level.backgroundSrite.setTexture(l_level.backgroundTexture->getTexture());
 
-	l_level.activeObjects.push_back(GameObjectFactory().createPlayer());
+    l_level.activeObjects.push_back(GameObjectFactory().createPlayer(TextureContainer::getSprite(rs::tx::player)));
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 50, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 400, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 170, 0, TextureContainer::getSprite(rs::tx::bench)));

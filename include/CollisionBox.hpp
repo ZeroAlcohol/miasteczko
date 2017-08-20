@@ -11,16 +11,17 @@ class CollisionBox
 
 public:
 	CollisionBox();
-    CollisionBox(std::vector<std::pair<float, float> > p_points);
-	CollisionBox::CollisionBox(CollisionBox & a);
+        CollisionBox(std::vector<std::pair<float, float> > p_points);
+        CollisionBox(CollisionBox & a);
 	~CollisionBox();
 
 	inline float calculateRadius() const;//only for circle
 
-	bool CollisionBox::detectCollision(const CollisionBox& p_a);
+        bool CollisionBoxdetectCollision(const CollisionBox& p_a);
 	bool collisionCircleCircle(const CollisionBox& p_a, const CollisionBox& p_b);
 	bool collisionCircleRectangle(const CollisionBox& p_a, const CollisionBox& p_b);
 	bool collisionRectangleRectangle(const CollisionBox& p_a, const CollisionBox& p_b);
+        bool detectCollision(const CollisionBox& p_a);
 
 
 private:
