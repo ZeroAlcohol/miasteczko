@@ -6,6 +6,17 @@ void TextureContainer::createResources()
 {
 	const std::string basePath = TEXTURES_DIR;
 	TextureContainer & instance = TextureContainer::getInstance();
+	instance.putTexturesByKey({ 
+		rs::tx::tile::grass, 
+		rs::tx::tile::pavementLeft,
+		rs::tx::tile::pavementRight,
+		rs::tx::tile::pavementTopLeft,
+		rs::tx::tile::pavementTop, 
+		rs::tx::tile::pavementBottom,
+		rs::tx::tile::pavement,
+		rs::tx::tile::asphalt, 
+		rs::tx::tile::pavementTopLeftIn
+		}, "tiles/");
 }
 
 sf::Texture &TextureContainer::getTexture(std::string p_name)

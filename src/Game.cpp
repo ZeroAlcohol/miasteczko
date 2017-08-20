@@ -35,7 +35,7 @@ void Game::update(const float dt)
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 {
-	// here render backround
+	p_window.draw(m_level.backgroundSrite);
 
 	for (auto& t : m_level.passiveObjects)
 	{
