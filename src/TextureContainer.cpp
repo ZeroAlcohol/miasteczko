@@ -6,7 +6,6 @@ void TextureContainer::createResources()
 {
 	const std::string basePath = TEXTURES_DIR;
 	TextureContainer & instance = TextureContainer::getInstance();
-	instance.putTexture(rs::tx::vodka, basePath + "vodka.png");
 }
 
 sf::Texture &TextureContainer::getTexture(std::string p_name)
