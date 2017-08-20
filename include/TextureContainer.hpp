@@ -28,6 +28,9 @@ private:
     std::map<std::string, sf::Texture> m_textureMap;
     std::map<std::string, sf::Sprite> m_spriteMap;
 
+	sf::Texture defaultTexture;
+	sf::Sprite defaultSprite;
+
 };
 
 

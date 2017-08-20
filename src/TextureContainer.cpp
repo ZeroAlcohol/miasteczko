@@ -26,20 +26,19 @@ void TextureContainer::createResources()
 
 sf::Texture &TextureContainer::getTexture(std::string p_name)
 {
-	// TODO fix returning address of local variable or temporary
-	sf::Texture l_texture;
+
 #ifndef NDEBUG
 	try
 	{
-		l_texture = TextureContainer::getInstance().m_textureMap.at(p_name);
+		return TextureContainer::getInstance().m_textureMap.at(p_name);
 	}
 	catch (const std::out_of_range & oor) {
 		LOG(ERROR) << oor.what() << " (key: " << p_name << ")";
+		return defaultTexture;
 	}
 #else
-    l_texture = TextureContainer::getInstance().m_textureMap[p_name];
+    return TextureContainer::getInstance().m_textureMap[p_name];
 #endif
-	return l_texture;
 }
 
 void TextureContainer::putTexturesByKey(std::initializer_list<const std::string> p_keys, const std::string p_path, const std::string p_format)
@@ -76,20 +75,19 @@ void TextureContainer::putTexture(std::string p_name, std::string p_addressImage
 sf::Sprite& TextureContainer::getSprite(std::string p_name)
 {
 	// TODO fix returning address of local variable or temporary
-	sf::Sprite l_sprite;
 
 #ifndef NDEBUG
 	try
 	{
-		l_sprite = TextureContainer::getInstance().m_spriteMap.at(p_name);
+		return TextureContainer::getInstance().m_spriteMap.at(p_name);
 	}
 	catch (const std::out_of_range & oor) {
 		LOG(ERROR) << oor.what()<< " (key: "<<p_name<<")";
+		return TextureContainer::getInstance().defaultSprite;
 	}
 #else
-    l_sprite = TextureContainer::getInstance().m_spriteMap[p_name];
+    return TextureContainer::getInstance().m_spriteMap[p_name];
 #endif // !NDEBUG
-	return l_sprite;
 }
 
 TextureContainer &TextureContainer::getInstance()
