@@ -16,5 +16,8 @@ namespace rs
 			constexpr auto pavement = "pavement";
 			constexpr auto asphalt = "asphalt";
 		}
+
+		constexpr auto flowerBox = "flower-box";
+		constexpr auto bench = "bench";
 	}
 }

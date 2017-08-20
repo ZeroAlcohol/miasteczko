@@ -17,10 +17,16 @@ void TextureContainer::createResources()
 		rs::tx::tile::asphalt, 
 		rs::tx::tile::pavementTopLeftIn
 		}, "tiles/");
+
+	instance.putTexturesByKey({ 
+		rs::tx::flowerBox,
+		rs::tx::bench
+		});
 }
 
 sf::Texture &TextureContainer::getTexture(std::string p_name)
 {
+	// TODO fix returning address of local variable or temporary
 	sf::Texture l_texture;
 #ifndef NDEBUG
 	try
@@ -69,6 +75,7 @@ void TextureContainer::putTexture(std::string p_name, std::string p_addressImage
 
 sf::Sprite& TextureContainer::getSprite(std::string p_name)
 {
+	// TODO fix returning address of local variable or temporary
 	sf::Sprite l_sprite;
 
 #ifndef NDEBUG

@@ -94,9 +94,9 @@ Level LevelLoader::load(const std::string p_id)
 	l_level.backgroundSrite.setTexture(l_level.backgroundTexture->getTexture());
 
 	l_level.activeObjects.push_back(GameObjectFactory().createPlayer());
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveRenderRectangle(200, 100, 100, 100, 50, { 255, 0, 0 }));
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveRenderRectangle(800, 120, 100, 300, 75, { 0, 255, 0 }));
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveRenderRectangle(700, 320, 150, 150, 0, { 0, 0, 255 }));
+	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 50, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
+	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 400, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
+	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 170, 0, TextureContainer::getSprite(rs::tx::bench)));
 
     auto l_activeObjectsIterator = std::find_if(l_level.activeObjects.begin(), l_level.activeObjects.end(), [](const auto& p){return p == nullptr;});
 	if(l_level.activeObjects.end() != l_activeObjectsIterator && nullptr == *l_activeObjectsIterator)
