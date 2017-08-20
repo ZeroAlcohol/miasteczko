@@ -36,11 +36,11 @@ float CollisionBox::distancePointPoint(const std::pair<float, float>& p_a,const 
 }
 
 
-float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, const std::pair<float, float>& p_line1,const std::pair<float, float>& p_line2) const
+float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, const std::pair<float, float>& p_line1, const std::pair<float, float>& p_line2) const
 {
-	if ( p_line1 == p_line2)
+	if (p_line1 == p_line2)
 	{
-		distancePointPoint(p_point, p_line2);
+		return distancePointPoint(p_point, p_line2);
 	}
 
 	if (p_line2.first == p_line1.first)
@@ -49,21 +49,21 @@ float CollisionBox::distancePointLine(const std::pair<float, float>& p_point, co
 	}
 
 	//ax+by+c = 0
-	float a = (p_line2.second - p_line1.second) / (p_line2.first - p_line1.first);
-	float b = -1;
-	float c = p_line1.second - a*p_line1.first;
+	const float a{ (p_line2.second - p_line1.second) / (p_line2.first - p_line1.first) };
+	const float b {-1};
+	const float c { p_line1.second - a*p_line1.first };
 
-	return abs(a*p_point.first + b*p_point.second + c) / (sqrt(a*a + b*b));
+	return std::abs(a*p_point.first + b*p_point.second + c) / (sqrt(a*a + b*b));
 
 }
 
 bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, const std::pair<float, float> & p_lineA1, const std::pair<float, float> & p_lineA2, const std::pair<float, float> & p_lineB1, const std::pair<float, float> & p_lineB2) const
 {
-	float aA = (p_lineA2.second - p_lineA1.second) / (p_lineA2.first - p_lineA1.first);
-	float bA = p_lineA1.second - aA*p_lineA1.first;
+	const float aA{ (p_lineA2.second - p_lineA1.second) / (p_lineA2.first - p_lineA1.first) };
+	const float bA{ p_lineA1.second - aA*p_lineA1.first };
 
-	float aB = (p_lineB2.second - p_lineB1.second) / (p_lineB2.first - p_lineB1.first);
-	float bB = p_lineB1.second - aA*p_lineB1.first;
+	const float aB{(p_lineB2.second - p_lineB1.second) / (p_lineB2.first - p_lineB1.first)};
+	const float bB{ p_lineB1.second - aA*p_lineB1.first };
 
 	if (aA*p_point.first + bA < p_point.second)
 	{
@@ -87,15 +87,9 @@ bool CollisionBox::pointBetweenLines(const std::pair<float, float>& p_point, con
 
 float CollisionBox::calculateRadius() const
 {
-	if (m_figureType == figureType::circle)
-	{
-		return distancePointPoint(m_points[0], m_points[1]);
-	}
-
-	else
-	{
-		return 0;
-	}
+	float result;
+	result = ((m_figureType == figureType::circle) ? (distancePointPoint(m_points[0], m_points[1])) : (0));
+	return result;
 }
 
 bool CollisionBox::detectCollision(const CollisionBox& p_a)
