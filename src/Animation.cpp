@@ -45,7 +45,7 @@ bool Animation::isLooped()
 
 bool Animation::isPlaying()
 {
-    return not m_isPaused;
+    return !m_isPaused;
 }
 
 std::chrono::time_point<std::chrono::system_clock> Animation::getCurrentTime()
