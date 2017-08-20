@@ -5,14 +5,14 @@
 Player::Player(std::string p_name, sf::Sprite p_sprite) : m_name(p_name)
 {
       m_animation.setTexture(*p_sprite.getTexture());
-      m_animation.addFrame(sf::IntRect(0, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(250, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(500, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(750, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(1000, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(1250, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(1500, 0, 250, 250));
-      m_animation.addFrame(sf::IntRect(1750, 0, 250, 250));
+      m_animation.addFrame(sf::IntRect(0, 0, 152, 252));
+      m_animation.addFrame(sf::IntRect(152, 0, 152, 252));
+      m_animation.addFrame(sf::IntRect(0, 255, 152, 252));
+      m_animation.addFrame(sf::IntRect(152, 252, 152, 252));
+      m_animation.addFrame(sf::IntRect(0, 504, 152, 252));
+      m_animation.addFrame(sf::IntRect(152, 504, 152, 252));
+
+      m_animation.setFrameDuration(std::chrono::milliseconds(100));
 }
 
 Player::~Player()

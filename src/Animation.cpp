@@ -61,14 +61,14 @@ std::chrono::microseconds Animation::getFrameDuration()
 void Animation::updateAnimation()
 {
 
-    if (not m_isPaused)
+    if (! m_isPaused)
     {
         m_currentTime = std::chrono::system_clock::now();
 
         if(m_currentTime > m_frameTime)
         {
             m_frameTime = m_currentTime + m_frameDuration;
-            if (m_currentFrame + 1 < m_frames.size())
+            if (m_currentFrame +1 < m_frames.size())
                     m_currentFrame++;
             else
                 m_currentFrame = 0;
