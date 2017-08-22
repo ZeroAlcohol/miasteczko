@@ -5,7 +5,7 @@
 #include "Game.hpp"
 #include "LevelLoader.hpp"
 #include "easylogging++.h"
-
+#include "TextFactory.hpp"
 
 Game::Game()
 {
@@ -35,6 +35,7 @@ void Game::update(const float dt)
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 {
+
 	p_window.draw(m_level.backgroundSrite);
 
 	for (auto& t : m_level.passiveObjects)
@@ -46,6 +47,12 @@ void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 	{
 		t->render(p_window);
 	}
+
+    // TEMPORATY PoC
+    TextFactory l_textFactoryObject;
+    sf::Text l_fps = l_textFactoryObject.createText("Miasteczko", 400,"../data/arial.ttf");
+    p_window.draw(l_fps);
+
 
 	// here render hud
 }
