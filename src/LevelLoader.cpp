@@ -2,6 +2,8 @@
 #include "TextureContainer.hpp"
 #include "GameObjectFactory.hpp"
 #include "LevelLoader.hpp"
+#include "TextFactory.hpp"
+#include "FpsCounter.hpp"
 
 constexpr unsigned tilesArrayHeight{ 32 };
 constexpr unsigned tilesArrayWidth{ 32 };
@@ -97,6 +99,9 @@ Level LevelLoader::load(const std::string p_id)
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 50, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 400, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
 	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 170, 0, TextureContainer::getSprite(rs::tx::bench)));
+
+    //temp
+    l_level.passiveObjects.push_back(std::make_unique<TextFactory>(std::to_string(33390), 200,"../data/xxx.ttf"));
 
     auto l_activeObjectsIterator = std::find_if(l_level.activeObjects.begin(), l_level.activeObjects.end(), [](const auto& p){return p == nullptr;});
 	if(l_level.activeObjects.end() != l_activeObjectsIterator && nullptr == *l_activeObjectsIterator)
