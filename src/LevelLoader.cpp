@@ -71,15 +71,28 @@ Level LevelLoader::load(const std::string p_id)
 	}
 
 	const int tileSize { m_tilesMapper[0].getTextureRect().width };
+
 	l_level.width = tileSize * tilesArrayWidth;
 	l_level.height = tileSize * tilesArrayHeight;
+	auto background = loadBackround(l_level.width, l_level.height, tileSize);
+	l_level.backgroundTexture = std::move(background.first);
+	l_level.backgroundSrite = background.second;
+	l_level.passiveObjects = loadPassiveObjects();
+	l_level.activeObjects = loadActiveObjects();
+	l_level.id = p_id;
 
-	l_level.backgroundTexture = std::make_unique<sf::RenderTexture>();
+	return l_level;
+}
 
-	if (!l_level.backgroundTexture || !l_level.backgroundTexture->create(l_level.width, l_level.height))
+std::pair <std::unique_ptr<sf::RenderTexture>, sf::Sprite> LevelLoader::loadBackround(unsigned p_width, unsigned p_height, unsigned p_tileSize)
+{
+	std::unique_ptr<sf::RenderTexture> l_backgroundTexture = std::make_unique<sf::RenderTexture>();
+	sf::Sprite l_backgroundSrite;
+
+	if (!l_backgroundTexture || !l_backgroundTexture->create(p_width, p_height))
 	{
 		LOG(ERROR) << "Unable to create level's background!";
-		return l_level;
+		return std::make_pair(nullptr, sf::Sprite());
 	}
 
 	for (int i = 0; i < tilesArrayHeight; ++i)
@@ -87,36 +100,54 @@ Level LevelLoader::load(const std::string p_id)
 		for (int j = 0; j < tilesArrayWidth; ++j)
 		{
 			sf::Sprite & l_tile = m_tilesMapper[tilesMap[i][j]];
-			l_tile.setPosition(j*tileSize, i*tileSize);
-			l_level.backgroundTexture->draw(l_tile);
+			l_tile.setPosition(j*p_tileSize, i*p_tileSize);
+			l_backgroundTexture->draw(l_tile);
 		}
 	}
 
-	l_level.backgroundTexture->display();
-	l_level.backgroundSrite.setTexture(l_level.backgroundTexture->getTexture());
+	l_backgroundTexture->display();
+	l_backgroundSrite.setTexture(l_backgroundTexture->getTexture());
 
-    l_level.activeObjects.push_back(GameObjectFactory().createPlayer(TextureContainer::getSprite(rs::tx::player)));
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 50, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 400, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
-	l_level.passiveObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 170, 0, TextureContainer::getSprite(rs::tx::bench)));
+	return make_pair(std::move(l_backgroundTexture), l_backgroundSrite);
+}
 
-    //temp
-    l_level.passiveObjects.push_back(std::make_unique<TextFactory>(std::to_string(33390), 200,"../data/xxx.ttf"));
-
-    auto l_activeObjectsIterator = std::find_if(l_level.activeObjects.begin(), l_level.activeObjects.end(), [](const auto& p){return p == nullptr;});
-	if(l_level.activeObjects.end() != l_activeObjectsIterator && nullptr == *l_activeObjectsIterator)
-	{
-		LOG(ERROR) << "One of active objects can't be loaded!";
-		return l_level;
-	}
-
-    auto l_passiveObjectsIterator = std::find_if(l_level.passiveObjects.begin(), l_level.passiveObjects.end(), [](const auto& p){return p == nullptr;});
-   	if(l_level.passiveObjects.end() != l_passiveObjectsIterator && *l_passiveObjectsIterator == nullptr)
-	{
-		LOG(ERROR) << "One of passive objects can't be loaded!";
-		return l_level;
-	}
+bool LevelLoader::validateObjectsCollection(std::list<std::unique_ptr<IObject>> & p_objectsList) const
+{
+	auto l_objectsIterator = std::find_if(p_objectsList.begin(), p_objectsList.end(), [](const auto& p) {return p == nullptr; });
 	
-	l_level.id = p_id;
-	return l_level;
+	if (p_objectsList.end() != l_objectsIterator && *l_objectsIterator == nullptr)
+	{
+		LOG(ERROR) << "One of passive objects can't be loaded, clear collection!";
+		p_objectsList.clear();
+		return false;
+	}
+
+	return true;
+}
+
+std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const 
+{
+	std::list<std::unique_ptr<IObject>> l_loadedObjects;
+
+	l_loadedObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 50, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
+	l_loadedObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 400, 0, TextureContainer::getSprite(rs::tx::flowerBox)));
+	l_loadedObjects.push_back(GameObjectFactory().createPassiveTexturedRectangle(50, 170, 0, TextureContainer::getSprite(rs::tx::bench)));
+
+	//temp
+	l_loadedObjects.push_back(std::make_unique<TextFactory>(std::to_string(33390), 200, "../data/xxx.ttf"));
+
+	validateObjectsCollection(l_loadedObjects);
+
+	return l_loadedObjects;
+}
+
+std::list<std::unique_ptr<IObject>> LevelLoader::loadActiveObjects() const 
+{
+	std::list<std::unique_ptr<IObject>> l_loadedObjects;
+
+	l_loadedObjects.push_back(GameObjectFactory().createPlayer(TextureContainer::getSprite(rs::tx::player)));
+
+	validateObjectsCollection(l_loadedObjects);
+
+	return l_loadedObjects;
 }
