@@ -14,6 +14,8 @@ public:
     std::string getName();
     void run() override;
     void render(sf::RenderWindow& p_window) override;
+	std::pair <float, float> getCenterCoordinates() const;
+	
 private:
     std::string m_name;
     Animation m_animation;

@@ -7,7 +7,7 @@
 
 App::App()
 {
-	m_window.create(sf::VideoMode(1000, 600), "Game");
+	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game");
 	TextureContainer::createResources();
 }
 

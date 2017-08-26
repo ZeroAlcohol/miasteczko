@@ -14,6 +14,8 @@ public:
 
 private:
 	Level m_level;
+
+	sf::View getLevelView() const;
 };
 
 

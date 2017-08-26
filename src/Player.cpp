@@ -72,3 +72,12 @@ void Player::render(sf::RenderWindow& p_window)
     p_window.draw(m_animation);
 }
 
+
+std::pair <float, float> Player::getCenterCoordinates() const
+{
+	sf::FloatRect l_rect {m_animation.getGlobalBounds()};
+	float l_x {l_rect.left + l_rect.width * 0.5f};
+	float l_y {l_rect.top + l_rect.height * 0.5f};
+
+	return std::make_pair(l_x, l_y);
+}

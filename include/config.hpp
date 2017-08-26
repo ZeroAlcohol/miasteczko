@@ -8,6 +8,9 @@ constexpr float DELAY_PER_UPDATE_FRAME_SEC{ 1.0f/ GAME_TARGET_UPS };
 constexpr uint32_t GAME_MAX_FPS{ 100 };
 constexpr uint64_t MIN_DELAY_PER_RENDER_FRAME{ 1000000ULL / GAME_MAX_FPS };
 
+constexpr unsigned WINDOW_WIDTH{ 1000 };
+constexpr unsigned WINDOW_HEIGHT{ 600 };
+
 #ifdef WIN32
 
 #include "config.win.hpp"
