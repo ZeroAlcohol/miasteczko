@@ -1,6 +1,6 @@
 #include "Animation.hpp"
 
-Animation::Animation(std::chrono::microseconds p_duration) : m_isLooped(true), m_isPaused(false)
+Animation::Animation(std::chrono::microseconds p_duration) : m_isLooped(true), m_isPaused(false), m_currentFrame{0}
 {
     m_currentTime = std::chrono::system_clock::now();
     m_frameDuration = p_duration;;
