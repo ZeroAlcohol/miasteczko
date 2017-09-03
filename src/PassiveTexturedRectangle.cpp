@@ -1,9 +1,5 @@
 #include "PassiveTexturedRectangle.hpp"
 
-
-
-#include "PassiveRenderRectangle.hpp"
-
 PassiveTexturedRectangle::PassiveTexturedRectangle(float p_x, float p_y, float p_rotation, sf::Sprite p_sprite) :
 	m_sprite{p_sprite}
 {
