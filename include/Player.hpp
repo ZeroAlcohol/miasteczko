@@ -9,7 +9,7 @@
 class Player : public IObject
 {
 public:
-    Player(std::string p_name, sf::Sprite p_sprite);
+    Player(std::string p_name, sf::Sprite p_sprite, float p_x, float p_y, float p_rotation);
     ~Player();
     std::string getName();
     void run() override;

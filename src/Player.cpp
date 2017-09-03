@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cmath>
 
-Player::Player(std::string p_name, sf::Sprite p_sprite) : m_name(p_name)
+Player::Player(std::string p_name, sf::Sprite p_sprite, float p_x, float p_y, float p_rotation) : m_name(p_name)
 {
       m_animation.setTexture(*p_sprite.getTexture());
       m_animation.addFrame(sf::IntRect(0, 0, 152, 252));
@@ -13,6 +13,9 @@ Player::Player(std::string p_name, sf::Sprite p_sprite) : m_name(p_name)
       m_animation.addFrame(sf::IntRect(152, 504, 152, 252));
 
       m_animation.setFrameDuration(std::chrono::milliseconds(100));
+
+	  m_animation.setPosition(p_x, p_y);
+	  m_animation.setRotation(p_rotation);
 }
 
 Player::~Player()
