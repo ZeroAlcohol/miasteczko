@@ -55,9 +55,9 @@ LevelLoader::LevelLoader() :
 		std::make_pair(7, TextureContainer::getSprite(rs::tx::tile::pavementBottom)),
 		std::make_pair(8, TextureContainer::getSprite(rs::tx::tile::pavement)),
 		std::make_pair(9, TextureContainer::getSprite(rs::tx::tile::pavementTopLeftIn))
-	}
+	},
+	m_tileSize{ unsigned(m_tilesMapper[0].getTextureRect().width) }
 {
-
 }
 
 Level LevelLoader::load(const std::string p_id)
@@ -70,11 +70,10 @@ Level LevelLoader::load(const std::string p_id)
 		return l_level;
 	}
 
-	const int tileSize { m_tilesMapper[0].getTextureRect().width };
 
-	l_level.width = tileSize * tilesArrayWidth;
-	l_level.height = tileSize * tilesArrayHeight;
-	auto background = loadBackround(l_level.width, l_level.height, tileSize);
+	l_level.width = m_tileSize * tilesArrayWidth;
+	l_level.height = m_tileSize * tilesArrayHeight;
+	auto background = loadBackround(l_level.width, l_level.height, m_tileSize);
 	l_level.backgroundTexture = std::move(background.first);
 	l_level.backgroundSrite = background.second;
 	l_level.passiveObjects = loadPassiveObjects();
