@@ -52,18 +52,19 @@ void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 	}
 }
 
-sf::View Game::getLevelView() const
+sf::View Game::getLevelView() const   // need to be remove from this class
 {
-    const Player* const l_pPlayer{ dynamic_cast<const Player*> (m_level.activeObjects.front().get())};
-	if (nullptr == l_pPlayer)
+	auto const l_player = dynamic_cast<Player*> (m_level.activeObjects.front().get());
+
+	if (l_player == nullptr)
 	{
 		return sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 	}
 
-	const std::pair <float, float> l_coords{ l_pPlayer->getCenterCoordinates() };
+	auto l_coords = l_player->getCenterCoordinates();
 
-	float l_rectLeft{ std::max(0.0f, std::min(l_coords.first - WINDOW_WIDTH * 0.5f, float(m_level.width - WINDOW_WIDTH))) };
-	float l_rectTop{ std::max(0.0f, std::min(l_coords.second - WINDOW_HEIGHT * 0.5f, float(m_level.height - WINDOW_HEIGHT))) };
+	const float l_rectLeft {std::max(0.0f, std::min(l_coords.first - WINDOW_WIDTH * 0.5f, static_cast<float>(m_level.width - WINDOW_WIDTH)))};
+	const float l_rectTop {std::max(0.0f, std::min(l_coords.second - WINDOW_HEIGHT * 0.5f, static_cast<float>(m_level.height - WINDOW_HEIGHT)))};
 
 	return sf::View(sf::FloatRect(l_rectLeft, l_rectTop, WINDOW_WIDTH, WINDOW_HEIGHT));
 }
