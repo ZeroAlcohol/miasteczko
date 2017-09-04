@@ -29,10 +29,10 @@ void Game::onEvent(sf::Event & p_event)
 
 void Game::update(const float dt)
 {
-	for (auto t = m_level.activeObjects.begin(); t != m_level.activeObjects.end(); t++)
-	{
-		(*t)->run();
-	}
+    for (const auto& activeObject : m_level.activeObjects)
+    {
+        activeObject->run();
+    }
 }
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
@@ -41,23 +41,20 @@ void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 
 	p_window.draw(m_level.backgroundSrite);
 
-	for (auto& t : m_level.passiveObjects)
+    for (const auto& passiveObject : m_level.passiveObjects)
 	{
-        t->render(p_window);
+        passiveObject->render(p_window);
 	}
 
-	for (auto& t : m_level.activeObjects)
+    for (const auto& activeObject : m_level.activeObjects)
 	{
-		t->render(p_window);
+        activeObject->render(p_window);
 	}
-
-	// here render hud
-	p_window.setView(p_window.getDefaultView());
 }
 
 sf::View Game::getLevelView() const
 {
-	const Player * const l_pPlayer{ dynamic_cast<const Player *> (m_level.activeObjects.front().get())};
+    const Player* const l_pPlayer{ dynamic_cast<const Player*> (m_level.activeObjects.front().get())};
 	if (nullptr == l_pPlayer)
 	{
 		return sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));

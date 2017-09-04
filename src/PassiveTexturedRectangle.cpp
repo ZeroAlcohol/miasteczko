@@ -19,5 +19,5 @@ void PassiveTexturedRectangle::run()
 
 void PassiveTexturedRectangle::render(sf::RenderWindow& p_window)
 {
-	p_window.draw(m_sprite);
+     	p_window.draw(m_sprite);
 }

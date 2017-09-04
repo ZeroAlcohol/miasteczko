@@ -1,21 +1,9 @@
 #include "Player.hpp"
-#include <iostream>
 #include <cmath>
 
-Player::Player(std::string p_name, sf::Sprite p_sprite, float p_x, float p_y, float p_rotation) : m_name(p_name)
+Player::Player(std::string p_name, Animation p_animation) : m_name(p_name), m_animation(p_animation), m_speed(2)
 {
-      m_animation.setTexture(*p_sprite.getTexture());
-      m_animation.addFrame(sf::IntRect(0, 0, 152, 252));
-      m_animation.addFrame(sf::IntRect(152, 0, 152, 252));
-      m_animation.addFrame(sf::IntRect(0, 255, 152, 252));
-      m_animation.addFrame(sf::IntRect(152, 252, 152, 252));
-      m_animation.addFrame(sf::IntRect(0, 504, 152, 252));
-      m_animation.addFrame(sf::IntRect(152, 504, 152, 252));
 
-      m_animation.setFrameDuration(std::chrono::milliseconds(100));
-
-	  m_animation.setPosition(p_x, p_y);
-	  m_animation.setRotation(p_rotation);
 }
 
 Player::~Player()
@@ -23,44 +11,40 @@ Player::~Player()
 
 }
 
-std::string Player::getName()
+std::string Player::getName() const
 {
     return m_name;
 }
 
 void Player::run()
 {
-	double l_dirx{}, l_diry{};
-	double l_speed{ 2 };
+    float l_directionX{};
+    float l_directionY{};
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		l_dirx = -1;
+        l_directionX = -1;
 
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		l_dirx = 1;
-
+        l_directionX = 1;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
-		l_diry = -1;
+        l_directionY = -1;
 
     }
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
-		l_diry = 1;
+        l_directionY = 1;
 	}
 
-	bool l_move = l_dirx || l_diry;
-
-	if (l_move)
+    if (l_directionX || l_directionY)
 	{
-		double angle = std::atan2(l_diry, l_dirx);
-        m_animation.move(std::cos(angle) * l_speed, std::sin(angle) * l_speed);
-
+        double l_angle = std::atan2(l_directionY, l_directionX);
+        m_animation.move(std::cos(l_angle) * m_speed, std::sin(l_angle) * m_speed);
         m_animation.playAnimation();
 	}
     else
@@ -75,12 +59,11 @@ void Player::render(sf::RenderWindow& p_window)
     p_window.draw(m_animation);
 }
 
-
-std::pair <float, float> Player::getCenterCoordinates() const
+std::pair<float, float> Player::getCenterCoordinates() const
 {
-	sf::FloatRect l_rect {m_animation.getGlobalBounds()};
-	float l_x {l_rect.left + l_rect.width * 0.5f};
-	float l_y {l_rect.top + l_rect.height * 0.5f};
+    sf::FloatRect l_rect {m_animation.getGlobalBounds()};
+    float l_x {l_rect.left + l_rect.width * 0.5f};
+    float l_y {l_rect.top + l_rect.height * 0.5f};
 
-	return std::make_pair(l_x, l_y);
+    return std::make_pair(l_x, l_y);
 }
