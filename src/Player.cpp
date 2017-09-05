@@ -1,7 +1,7 @@
 #include "Player.hpp"
 #include <cmath>
 
-Player::Player(std::string p_name, Animation p_animation) : m_name(p_name), m_animation(p_animation), m_speed(2)
+Player::Player(std::string p_name, Animation p_animation) : m_name(p_name), m_animation(p_animation), m_speed(5)
 {
 
 }

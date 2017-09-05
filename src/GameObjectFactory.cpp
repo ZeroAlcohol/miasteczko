@@ -35,7 +35,6 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
     l_animation.setPosition(p_data.x, p_data.y);
     l_animation.setRotation(p_data.rotation);
 
-
     std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert", l_animation);
 	return std::move(l_player);
 }
@@ -48,7 +47,7 @@ std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const
 	return std::move(l_object);
 }
 
-std::unique_ptr<IObject> GameObjectFactory::createLevelObject(const LevelObjectData & p_data)
+std::unique_ptr<IObject> GameObjectFactory::createLevelObject(const LevelObjectData& p_data)
 {
     ObjectCreateMethod_t createFunction = m_levelObjectMapper[p_data.type];
     return (this->*createFunction)(p_data);

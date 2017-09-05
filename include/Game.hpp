@@ -1,7 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
+
 #include <SFML/Graphics.hpp>
-#include <level.hpp>
+#include <Level.hpp>
 
 class Game
 {
@@ -14,10 +15,6 @@ public:
 
 private:
 	Level m_level;
-
-	sf::View getLevelView() const;
 };
-
-
 
 #endif // GAME_H

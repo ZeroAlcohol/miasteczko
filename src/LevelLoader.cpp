@@ -84,14 +84,13 @@ Level LevelLoader::load(const std::string p_id)
 	}
 
 
-	l_level.width = m_tileSize * g_tilesArrayWidth;
-	l_level.height = m_tileSize * g_tilesArrayHeight;
-	auto background = loadBackround(l_level.width, l_level.height, m_tileSize);
-	l_level.backgroundTexture = std::move(background.first);
-	l_level.backgroundSrite = background.second;
-	l_level.passiveObjects = loadPassiveObjects();
-	l_level.activeObjects = loadActiveObjects();
-	l_level.id = p_id;
+	l_level.setDimension(std::make_pair( m_tileSize * g_tilesArrayWidth, m_tileSize * g_tilesArrayHeight));
+	auto background = loadBackround(l_level.getDimension().first, l_level.getDimension().second, m_tileSize);
+	l_level.setBackgroundTexture(std::move(background.first));
+	l_level.setBackgroundSprite(background.second);
+	l_level.setPassiveObjects(loadPassiveObjects());
+	l_level.setActiveObjects(loadActiveObjects());
+	l_level.setId(p_id);
 
 	return l_level;
 }
