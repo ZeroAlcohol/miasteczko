@@ -36,8 +36,10 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
     l_animation.setRotation(p_data.rotation);
 
     auto l_defaultPlayerSpeed = 5;
+
     std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert", l_animation, l_defaultPlayerSpeed);
-	return std::move(l_player);
+
+    return std::move(l_player);
 }
 
 std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const LevelObjectData & p_data)
@@ -45,12 +47,14 @@ std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const
 	const std::string textureKey = g_staticObjectsData[p_data.id];
 	sf::Sprite l_sprite = TextureContainer::getSprite(textureKey);
 	std::unique_ptr<PassiveTexturedRectangle> l_object = std::make_unique<PassiveTexturedRectangle>(p_data.x, p_data.y, p_data.rotation, l_sprite);
-	return std::move(l_object);
+
+    return std::move(l_object);
 }
 
 std::unique_ptr<IObject> GameObjectFactory::createLevelObject(const LevelObjectData& p_data)
 {
     ObjectCreateMethod_t createFunction = m_levelObjectMapper[p_data.type];
+
     return (this->*createFunction)(p_data);
 
 }
