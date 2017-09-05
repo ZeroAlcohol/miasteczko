@@ -146,7 +146,7 @@ std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const
 	}
 
 	//temp
-	l_loadedObjects.push_back(std::make_unique<TextFactory>(std::to_string(33390), 200, "../data/xxx.ttf"));
+	l_loadedObjects.push_back(std::make_unique<TextFactory>("33-390 Robert Pokrywka", 200, "../data/xxx.ttf"));
 
 	validateObjectsCollection(l_loadedObjects);
 
