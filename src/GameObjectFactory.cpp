@@ -35,7 +35,8 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
     l_animation.setPosition(p_data.x, p_data.y);
     l_animation.setRotation(p_data.rotation);
 
-    std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert", l_animation);
+    auto l_defaultPlayerSpeed = 5;
+    std::unique_ptr<Player> l_player = std::make_unique<Player>("Robert", l_animation, l_defaultPlayerSpeed);
 	return std::move(l_player);
 }
 

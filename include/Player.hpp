@@ -9,7 +9,7 @@ class Player : public IObject
 {
 public:
     Player();
-    Player(std::string p_name, Animation p_animation);
+    Player(std::string p_name, Animation p_animation, unsigned p_speed);
     ~Player();
     std::string getName() const;
     void run() override;
