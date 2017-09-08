@@ -1,8 +1,10 @@
 #pragma once
+
 #include <memory>
+
 #include "LevelObjectData.hpp"
 #include "IObject.hpp"
-#include <functional>
+
 
 class GameObjectFactory
 {

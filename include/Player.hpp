@@ -1,7 +1,8 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#pragma once
+
 #include <string>
 #include <memory>
+
 #include "IObject.hpp"
 #include "Animation.hpp"
 
@@ -22,4 +23,3 @@ private:
     float m_speed;
 };
 
-#endif // PLAYER_H

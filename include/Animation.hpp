@@ -1,14 +1,17 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
 #include <chrono>
 
-using namespace std::chrono_literals;
+#include <SFML/Graphics.hpp>
 
+using namespace std::chrono_literals;
 
 class Animation : public sf::Sprite
 {
 public:
+
+    using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
+
     Animation(std::chrono::microseconds p_duration = 50ms);
 
     void setFrameDuration(std::chrono::microseconds p_duration);
@@ -26,12 +29,12 @@ public:
     bool isPlaying();
 
     std::chrono::microseconds getFrameDuration();
-    std::chrono::time_point<std::chrono::system_clock> getCurrentTime();
+    TimePoint getCurrentTime();
 
 private:
     std::chrono::microseconds m_frameDuration;
-    std::chrono::time_point<std::chrono::system_clock> m_currentTime;
-    std::chrono::time_point<std::chrono::system_clock> m_frameTime;
+    TimePoint m_currentTime;
+    TimePoint m_frameTime;
     unsigned m_currentFrame;
     bool m_isPaused;
     bool m_isLooped;

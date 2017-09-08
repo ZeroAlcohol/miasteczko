@@ -1,16 +1,21 @@
-#ifndef FPS_COUNTER_H
-#define FPS_COUNTER_H
+#pragma once
+
 #include <SFML/System.hpp>
+#include "TextFactory.hpp"
+#include "IObject.hpp"
 
-
-class FpsCounter
+class FpsCounter : public IObject
 {
 public:
     FpsCounter();
     unsigned getFrames();
+    void run() override;
+    void render(sf::RenderWindow& p_window) override;
+
 private:
     sf::Clock m_clock;
-    sf::Time m_elpasedTime;
+    unsigned m_framerate;
+    TextFactory m_text;
+
 };
 
-#endif // FPS_COUNTER_H

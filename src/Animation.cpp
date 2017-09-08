@@ -48,7 +48,7 @@ bool Animation::isPlaying()
     return !m_isPaused;
 }
 
-std::chrono::time_point<std::chrono::system_clock> Animation::getCurrentTime()
+Animation::TimePoint Animation::getCurrentTime()
 {
     return m_currentTime;
 }

@@ -139,14 +139,14 @@ bool LevelLoader::validateObjectsCollection(std::list<std::unique_ptr<IObject>> 
 std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const 
 {
 	std::list<std::unique_ptr<IObject>> l_loadedObjects;
-	
+
 	for (auto & objectData : g_passiveLevelObjectsData)
 	{
 		l_loadedObjects.push_back(GameObjectFactory().createLevelObject(objectData));
 	}
 
 	//temp
-	l_loadedObjects.push_back(std::make_unique<TextFactory>("33-390 Robert Pokrywka", 200, "../data/xxx.ttf"));
+    l_loadedObjects.push_back(std::make_unique<FpsCounter>());
 
 	validateObjectsCollection(l_loadedObjects);
 

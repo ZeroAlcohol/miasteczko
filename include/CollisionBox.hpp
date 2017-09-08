@@ -1,5 +1,5 @@
-#ifndef COLLISION_BOX
-#define COLLISION_BOX
+#pragma once
+
 #include <tuple>
 #include <vector>
 #include <cmath>
@@ -32,4 +32,3 @@ private:
 
 };
 
-#endif

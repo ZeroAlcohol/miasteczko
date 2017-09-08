@@ -1,7 +1,7 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
 #include <Level.hpp>
 
 class Game
@@ -17,4 +17,3 @@ private:
 	Level m_level;
 };
 
-#endif // GAME_H

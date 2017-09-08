@@ -1,12 +1,12 @@
-#ifndef TEXT_FACTORY_H
-#define TEXT_FACTORY_H
+#pragma once
+
 #include "SFML/Graphics.hpp"
 #include "IObject.hpp"
 
 class TextFactory : public IObject
 {
 public:
-    TextFactory(std::string p_text, int p_scale, std::string p_font);
+    TextFactory(std::string p_text, int p_scale, sf::Color p_color, std::string p_font);
 	~TextFactory();
     void run() override;
     void render(sf::RenderWindow& p_window) override;
@@ -17,4 +17,3 @@ private:
 	sf::Font m_font;
 };
 
-#endif

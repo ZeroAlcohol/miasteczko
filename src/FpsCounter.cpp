@@ -1,14 +1,28 @@
 #include "FpsCounter.hpp"
 
-FpsCounter::FpsCounter()
+FpsCounter::FpsCounter() : m_framerate(0), m_text("Nacisniej F a zobaczysz Fps'y", 100, sf::Color::Red, "../data/xxx.ttf")
 {
 
 }
 
 unsigned FpsCounter::getFrames()
 {
-    sf::Time m_elpasedTime = m_clock.getElapsedTime();
-    unsigned l_frames = 1.0/m_elpasedTime.asSeconds();
-    m_clock.restart().asSeconds();
-    return l_frames;
+    m_framerate = 1.f / m_clock.getElapsedTime().asSeconds();
+    m_clock.restart();
+    return m_framerate;
+}
+
+void FpsCounter::run()
+{
+
+}
+
+void FpsCounter::render(sf::RenderWindow& p_window)
+{
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+    {
+        m_text.setText(std::to_string(getFrames()) + " Fps");
+    }
+
+     m_text.render(p_window);
 }

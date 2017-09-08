@@ -1,5 +1,7 @@
 #pragma once
+
 #include <chrono>
+
 #include "Game.hpp"
 
 class App

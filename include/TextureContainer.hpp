@@ -1,8 +1,10 @@
-#ifndef TEXTURE_CONTAINER_H
-#define TEXTURE_CONTAINER_H
+#pragma once
+
 #include <map>
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+
 #include "resources.textures.hpp"
 
 class TextureContainer
@@ -33,5 +35,3 @@ private:
 
 };
 
-
-#endif // RESOURCE_PROVIDER_H

@@ -1,13 +1,6 @@
-#include <chrono>
 #include <cmath>
-#include "easylogging++.h"
-#include "config.hpp"
-#include "TextureContainer.hpp"
-#include "resources.textures.hpp"
 #include "Game.hpp"
 #include "LevelLoader.hpp"
-#include "TextFactory.hpp"
-#include "Player.hpp"
 
 Game::Game()
 {
@@ -50,4 +43,5 @@ void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 	{
         activeObject->render(p_window);
 	}
+
 }

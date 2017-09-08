@@ -1,9 +1,10 @@
 #pragma once
 
-#include "config.hpp"
-#include "IObject.hpp"
 #include <memory>
 #include <list>
+
+#include "config.hpp"
+#include "IObject.hpp"
 
 class Level
 {

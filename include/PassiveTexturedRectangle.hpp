@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "IObject.hpp"
 
+#include "IObject.hpp"
 
 class PassiveTexturedRectangle : public IObject
 {
