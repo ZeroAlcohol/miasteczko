@@ -1,15 +1,33 @@
 #include "catch.hpp"
 #include "Player.hpp"
+#include "Animation.hpp"
+#include <memory>
 
-
-TEST_CASE( "shouldReturnNamePlayerIfWasCreatedWithNamePlayer" )
+struct PlayerTestSuite
 {
-   // Player l_player("Player");
-    //REQUIRE( l_player.getName() == "Player" );
+    PlayerTestSuite();
+    std::shared_ptr<Player> m_player;
+    std::shared_ptr<Animation> m_animation;
+    std::pair<float, float> m_coordinates;
+
+};
+
+PlayerTestSuite::PlayerTestSuite()
+{
+    m_animation = std::make_shared<Animation>();
 }
 
-TEST_CASE( "shouldNotReturnNamePlayerIfWasNotCreatedWithNamePlayer" )
+
+TEST_CASE_METHOD(PlayerTestSuite, "shouldReturnNameRobertWhenPlayerHasNameRobert" )
 {
-    //Player l_player("reyalP");
-   // REQUIRE( l_player.getName() != "Player" );
+    m_player = std::make_shared<Player>("Robert", *m_animation, 5);
+    REQUIRE("Robert" == m_player->getName());
 }
+
+TEST_CASE_METHOD(PlayerTestSuite, "shouldNotReturnNameRobertWhenPlayerHasNotNameRobert" )
+{
+    m_player = std::make_shared<Player>("Piotr", *m_animation, 5);
+    REQUIRE("Robert" != m_player->getName());
+}
+
+

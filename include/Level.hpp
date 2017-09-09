@@ -3,6 +3,9 @@
 #include <memory>
 #include <list>
 
+#include "SFML/Graphics/Sprite.hpp"
+#include "SFML/Graphics/RenderTexture.hpp"
+
 #include "config.hpp"
 #include "IObject.hpp"
 

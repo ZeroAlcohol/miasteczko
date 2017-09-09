@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-
+#include <SFML/Graphics/Sprite.hpp>
 #include "IObject.hpp"
 
 class PassiveTexturedRectangle : public IObject

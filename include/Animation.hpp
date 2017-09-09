@@ -12,9 +12,9 @@ public:
 
     using TimePoint = std::chrono::time_point<std::chrono::system_clock>;
 
-    Animation(std::chrono::microseconds p_duration = 50ms);
+    Animation(unsigned p_duration = 50);
 
-    void setFrameDuration(std::chrono::microseconds p_duration);
+    void setFrameDuration(unsigned p_duration);
     void setFrame(unsigned p_frame);   
     void addFrame(sf::IntRect p_rect);
     sf::IntRect getFrame(unsigned p_n);

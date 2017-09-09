@@ -30,7 +30,7 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
     l_animation.addFrame(sf::IntRect(0, 504, 152, 252));
     l_animation.addFrame(sf::IntRect(152, 504, 152, 252));
 
-    l_animation.setFrameDuration(std::chrono::milliseconds(100));
+    l_animation.setFrameDuration(100);
 
     l_animation.setPosition(p_data.x, p_data.y);
     l_animation.setRotation(p_data.rotation);
