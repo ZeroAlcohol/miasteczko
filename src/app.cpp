@@ -63,10 +63,26 @@ void App::run()
 void App::onEvent(sf::Event p_event)
 {
 
-	if (p_event.type == sf::Event::Closed)
+	switch (p_event.type)
 	{
+	case sf::Event::Closed:
 		m_appStates[int(m_currentStateIndex)]->onQuit();
 		m_window.close();
+		break;
+
+	case sf::Event::KeyReleased:
+		switch (p_event.key.code)
+		{
+		case sf::Keyboard::F:
+			if (m_fpsCounter.isVisible())
+			{
+				m_fpsCounter.hide();
+			}
+			else
+			{
+				m_fpsCounter.show();
+			}
+		}
 	}
 		
 	m_appStates[int(m_currentStateIndex)]->onEvent(p_event);
@@ -117,6 +133,7 @@ void App::renderFrame()
 
     m_window.clear();
 	m_appStates[int(m_currentStateIndex)]->renderFrame(m_window, dt);
+	m_fpsCounter.render(m_window);
 	m_window.display();
 }
 

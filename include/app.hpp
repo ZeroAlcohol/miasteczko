@@ -4,6 +4,7 @@
 #include <array>
 #include "Game.hpp"
 #include "Menu.hpp"
+#include "FpsCounter.hpp"
 
 class App
 {
@@ -30,4 +31,5 @@ private:
 	Game m_game;
     AppStateCode m_currentStateIndex;
 	std::array<IAppState *, 2> m_appStates { &m_menu, &m_game };
+	FpsCounter m_fpsCounter;
 };

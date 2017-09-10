@@ -4,7 +4,6 @@
 #include "GameObjectFactory.hpp"
 #include "LevelLoader.hpp"
 #include "Text.hpp"
-#include "FpsCounter.hpp"
 
 constexpr unsigned g_tilesArrayHeight{ 32 };
 constexpr unsigned g_tilesArrayWidth{ 32 };
@@ -144,9 +143,6 @@ std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const
 	{
 		l_loadedObjects.push_back(GameObjectFactory().createLevelObject(objectData));
 	}
-
-	//temp
-    l_loadedObjects.push_back(std::make_unique<FpsCounter>());
 
 	validateObjectsCollection(l_loadedObjects);
 

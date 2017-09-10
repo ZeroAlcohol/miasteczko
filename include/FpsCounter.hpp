@@ -2,20 +2,22 @@
 
 #include <SFML/System.hpp>
 #include "Text.hpp"
-#include "IObject.hpp"
 
-class FpsCounter : public IObject
+class FpsCounter
 {
 public:
     FpsCounter();
-    unsigned getFrames();
-    void run() override;
-    void render(sf::RenderWindow& p_window) override;
+    void render(sf::RenderWindow& p_window);
+	void show();
+	void hide();
+	bool isVisible() const;
 
 private:
+    unsigned getFrames();
     sf::Clock m_clock;
     unsigned m_framerate;
     Text m_text;
+	bool m_visible;
 
 };
 
