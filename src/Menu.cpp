@@ -1,9 +1,9 @@
-#include "Menu.hpp"
 #include <SFML/System.hpp>
 #include <TextureContainer.hpp>
+#include "config.hpp" 
+#include "Menu.hpp"
 
-
-Menu::Menu() : Play("Play", 100, sf::Color::White, "../data/xxx.ttf"), Options("Options", 100, sf::Color::White, "../data/xxx.ttf"),Exit("Exit", 100, sf::Color::White, "../data/xxx.ttf"),
+Menu::Menu() : Play("Play", 100, sf::Color::White, XXX_FONT_SOURCE_PATH), Options("Options", 100, sf::Color::White, XXX_FONT_SOURCE_PATH),Exit("Exit", 100, sf::Color::White, XXX_FONT_SOURCE_PATH),
                     m_currentState(State::Play), m_currentAppState(AppStateCode::Menu)
 {
 
