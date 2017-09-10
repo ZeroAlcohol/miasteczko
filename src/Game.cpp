@@ -2,30 +2,55 @@
 #include "Game.hpp"
 #include "LevelLoader.hpp"
 
-Game::Game()
+Game::Game() : m_isLoaded{ false }, m_currentAppState{ IAppState::AppStateCode::Game }
 {
 	
 }
 
-bool Game::createGame()
+bool Game::onEntry()
 {
-	const std::string l_levelId = "level_id";
-	m_level = LevelLoader().load(l_levelId);
-	bool levelLoadedCorrect = m_level.getId() == l_levelId;
-	return levelLoadedCorrect;
+	m_currentAppState = IAppState::AppStateCode::Game;
+	
+	if (false == m_isLoaded)
+	{
+		const std::string l_levelId = "level_id";
+		m_level = LevelLoader().load(l_levelId);
+		m_isLoaded = m_level.getId() == l_levelId;
+	}
+
+	return m_isLoaded;
+}
+
+bool Game::onQuit()
+{
+	return true;
 }
 
 void Game::onEvent(sf::Event & p_event)
 {
+	switch (p_event.type)
+	{
 
+	case sf::Event::KeyReleased:
+
+		switch (p_event.key.code)
+		{
+
+		case sf::Keyboard::Escape:
+			m_currentAppState = AppStateCode::Menu;
+			break;
+		}
+	}
 }
 
-void Game::update(const float dt)
+IAppState::AppStateCode Game::update(const float dt)
 {
     for (const auto& activeObject : m_level.getActiveObjects())
     {
         activeObject->run();
     }
+
+	return m_currentAppState;
 }
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)

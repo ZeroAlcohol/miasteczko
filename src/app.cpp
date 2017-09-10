@@ -5,7 +5,7 @@
 #include "TextureContainer.hpp"
 #include "app.hpp"
 
-App::App() : m_currentState(State::Menu)
+App::App() : m_currentStateIndex(IAppState::AppStateCode::Menu)
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game");
 	TextureContainer::createResources();
@@ -19,11 +19,10 @@ App::~App()
 void App::run() 
 {
 
-    if (false == m_game.createGame())
+    if (false == m_menu.onEntry())
     {
-        LOG(FATAL) << "Failed to create game!";
+        LOG(FATAL) << "Failed to entry menu!";
     }
-
     else
     {
         m_startupTimestamp = std::chrono::high_resolution_clock::now();
@@ -32,68 +31,70 @@ void App::run()
 
         while (m_window.isOpen())
         {
-            while (m_window.pollEvent(m_event))
+			while (m_window.pollEvent(m_event))
+			{
+				onEvent(m_event);
+			}
+
+            for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
             {
-                switch (m_currentState)
-                {
-                    case State::Game:
+				update();
+                m_updateTimeout += DELAY_PER_UPDATE_FRAME;
+            }
 
-                        if ((m_event.type == sf::Event::Closed) || ((m_event.type == sf::Event::KeyPressed) && (m_event.key.code == sf::Keyboard::Escape)))
-                        {
-                            m_currentState = State::Menu;
-                        }
+            //Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
+            if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
+                m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
+            }
 
-                         m_game.onEvent(m_event);
-
-
-                        for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
-                        {
-                            m_game.update(DELAY_PER_UPDATE_FRAME_SEC);
-                            m_updateTimeout += DELAY_PER_UPDATE_FRAME;
-                        }
-
-                        //Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
-                        if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
-                            m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
-                        }
-
-                        if (getMicrosecondsFromStart() >= m_renderMinTimeout)
-                        {
-                            renderFrame();
-                            m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
-                        }
-
-                        else
-                        {
-                            wait();
-                        }
-
-                    break;
-
-
-                    case State::Menu:
-
-                        auto l_menuState = m_menu.run();
-
-                        if(l_menuState == Menu::State::Play)
-                        {
-                                m_currentState = State::Game;
-                        }
-                        else if(l_menuState == Menu::State::Exit)
-                        {
-                            m_window.close();
-                        }
-
-                        renderFrame();
-
-                    break;
-
-                    }
-
-             }
+            if (getMicrosecondsFromStart() >= m_renderMinTimeout)
+            {
+                renderFrame();
+                m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
+            }
+            else
+            {
+                wait();
+            }
         }
     }
+}
 
+void App::onEvent(sf::Event p_event)
+{
+
+	if (p_event.type == sf::Event::Closed)
+	{
+		m_appStates[int(m_currentStateIndex)]->onQuit();
+		m_window.close();
+	}
+		
+	m_appStates[int(m_currentStateIndex)]->onEvent(p_event);
+}
+
+void App::update()
+{
+	const IAppState::AppStateCode l_futureStateIndex = m_appStates[int(m_currentStateIndex)]->update(DELAY_PER_UPDATE_FRAME_SEC);
+	if (l_futureStateIndex != m_currentStateIndex)
+	{
+		if (false == m_appStates[int(m_currentStateIndex)]->onQuit())
+		{
+			LOG(FATAL) << "Failed to quit current app state!";
+		}
+
+		if (IAppState::AppStateCode::Exit == l_futureStateIndex)
+		{
+			m_window.close();
+		}
+		else
+		{
+			m_currentStateIndex = l_futureStateIndex;
+			if (false == m_appStates[int(m_currentStateIndex)]->onEntry())
+			{
+				LOG(FATAL) << "Failed to entry new app state!";
+			}
+		}
+	}
 }
 
 void App::wait() 
@@ -115,11 +116,7 @@ void App::renderFrame()
     l_lastFrameRenderTime = getMicrosecondsFromStart();
 
     m_window.clear();
-
-    if(m_currentState == State::Menu)
-        m_menu.renderFrame(m_window);
-    if(m_currentState == State::Game)
-        m_game.renderFrame(m_window, dt);
+	m_appStates[int(m_currentStateIndex)]->renderFrame(m_window, dt);
 	m_window.display();
 }
 
