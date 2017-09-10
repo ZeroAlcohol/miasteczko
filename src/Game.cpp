@@ -45,3 +45,4 @@ void Game::renderFrame(sf::RenderWindow & p_window, const float dt)
 	}
 
 }
+

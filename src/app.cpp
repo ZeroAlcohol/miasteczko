@@ -5,7 +5,7 @@
 #include "TextureContainer.hpp"
 #include "app.hpp"
 
-App::App()
+App::App() : m_currentState(State::Menu)
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game");
 	TextureContainer::createResources();
@@ -18,10 +18,11 @@ App::~App()
 
 void App::run() 
 {
-	if (false == m_game.createGame())
-	{
-		LOG(FATAL) << "Failed to create game!";
-	}
+
+    if (false == m_game.createGame())
+    {
+        LOG(FATAL) << "Failed to create game!";
+    }
 
     else
     {
@@ -33,35 +34,66 @@ void App::run()
         {
             while (m_window.pollEvent(m_event))
             {
-                if ((m_event.type == sf::Event::Closed) || ((m_event.type == sf::Event::KeyPressed) && (m_event.key.code == sf::Keyboard::Escape)))
-                    m_window.close();
+                switch (m_currentState)
+                {
+                    case State::Game:
 
-                m_game.onEvent(m_event);
-            }
+                        if ((m_event.type == sf::Event::Closed) || ((m_event.type == sf::Event::KeyPressed) && (m_event.key.code == sf::Keyboard::Escape)))
+                        {
+                            m_currentState = State::Menu;
+                        }
 
-            for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
-            {
-                m_game.update(DELAY_PER_UPDATE_FRAME_SEC);
-                m_updateTimeout += DELAY_PER_UPDATE_FRAME;
-            }
+                         m_game.onEvent(m_event);
 
-            //Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
-            if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
-                m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
-            }
 
-            if (getMicrosecondsFromStart() >= m_renderMinTimeout)
-            {
-                renderFrame();
-                m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
-            }
+                        for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
+                        {
+                            m_game.update(DELAY_PER_UPDATE_FRAME_SEC);
+                            m_updateTimeout += DELAY_PER_UPDATE_FRAME;
+                        }
 
-            else
-            {
-                wait();
-            }
+                        //Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
+                        if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
+                            m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
+                        }
+
+                        if (getMicrosecondsFromStart() >= m_renderMinTimeout)
+                        {
+                            renderFrame();
+                            m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
+                        }
+
+                        else
+                        {
+                            wait();
+                        }
+
+                    break;
+
+
+                    case State::Menu:
+
+                        auto l_menuState = m_menu.run();
+
+                        if(l_menuState == Menu::State::Play)
+                        {
+                                m_currentState = State::Game;
+                        }
+                        else if(l_menuState == Menu::State::Exit)
+                        {
+                            m_window.close();
+                        }
+
+                        renderFrame();
+
+                    break;
+
+                    }
+
+             }
         }
     }
+
 }
 
 void App::wait() 
@@ -74,6 +106,7 @@ void App::wait()
         std::this_thread::sleep_for(std::chrono::microseconds(l_delay));
 	}
 }
+
 void App::renderFrame()
 {
 	//temporary
@@ -82,7 +115,11 @@ void App::renderFrame()
     l_lastFrameRenderTime = getMicrosecondsFromStart();
 
     m_window.clear();
-	m_game.renderFrame(m_window, dt);
+
+    if(m_currentState == State::Menu)
+        m_menu.renderFrame(m_window);
+    if(m_currentState == State::Game)
+        m_game.renderFrame(m_window, dt);
 	m_window.display();
 }
 

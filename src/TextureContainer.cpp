@@ -22,6 +22,7 @@ void TextureContainer::createResources()
 		rs::tx::flowerBox,
         rs::tx::bench,
         rs::tx::player
+
 		});
 }
 

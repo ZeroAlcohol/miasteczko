@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/System.hpp>
-#include "TextFactory.hpp"
+#include "Text.hpp"
 #include "IObject.hpp"
 
 class FpsCounter : public IObject
@@ -15,7 +15,7 @@ public:
 private:
     sf::Clock m_clock;
     unsigned m_framerate;
-    TextFactory m_text;
+    Text m_text;
 
 };
 

@@ -3,7 +3,7 @@
 #include "TextureContainer.hpp"
 #include "GameObjectFactory.hpp"
 #include "LevelLoader.hpp"
-#include "TextFactory.hpp"
+#include "Text.hpp"
 #include "FpsCounter.hpp"
 
 constexpr unsigned g_tilesArrayHeight{ 32 };
