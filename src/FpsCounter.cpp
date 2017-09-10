@@ -1,7 +1,7 @@
 #include "FpsCounter.hpp"
 #include "config.hpp"
 
-FpsCounter::FpsCounter() : m_framerate(0), m_text("Nacisniej F a zobaczysz Fps'y", 1000, sf::Color::Red, XXX_FONT_SOURCE_PATH), m_visible{false}
+FpsCounter::FpsCounter() : m_framerate(0), m_text("Nacisniej F a zobaczysz Fps'y", 100, sf::Color::Red, XXX_FONT_SOURCE_PATH), m_visible{false}
 {
 
 }
