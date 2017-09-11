@@ -19,7 +19,7 @@ void Animation::setFrame(unsigned p_frame)
 
 void Animation::setFrameDuration(unsigned p_duration)
 {
-    m_frameDuration = std::chrono::microseconds(p_duration);
+    m_frameDuration = std::chrono::milliseconds(p_duration);
 }
 
 void Animation::pauseAnimation()
@@ -74,6 +74,10 @@ void Animation::updateAnimation()
                 m_currentFrame = 0;
         }
 
+        setTextureRect(m_frames[m_currentFrame]);
+    }
+    else
+    {
         setTextureRect(m_frames[m_currentFrame]);
     }
 }
