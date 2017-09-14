@@ -1,7 +1,7 @@
 #include "FpsCounter.hpp"
 #include "config.hpp"
 
-FpsCounter::FpsCounter() : m_framerate(0), m_text("Nacisniej F a zobaczysz Fps'y", 100, sf::Color::Red, XXX_FONT_SOURCE_PATH), m_visible{false}
+FpsCounter::FpsCounter() : m_framerate(0), m_text("0", 30, sf::Color::Red, XXX_FONT_SOURCE_PATH), m_visible{false}
 {
 
 }
@@ -17,7 +17,7 @@ void FpsCounter::render(sf::RenderWindow& p_window)
 {
 	if (isVisible())
 	{
-		m_text.setText(std::to_string(getFrames()) + " Fps");
+		m_text.setText(std::to_string(getFrames()));
 		m_text.render(p_window);
 	}
 }

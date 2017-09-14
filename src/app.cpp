@@ -133,6 +133,7 @@ void App::renderFrame()
 
     m_window.clear();
 	m_appStates[int(m_currentStateIndex)]->renderFrame(m_window, dt);
+	m_window.setView(m_window.getDefaultView());
 	m_fpsCounter.render(m_window);
 	m_window.display();
 }
