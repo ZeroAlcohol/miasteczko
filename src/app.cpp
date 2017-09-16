@@ -1,9 +1,9 @@
-#include <thread>
-#include <algorithm>
+//#include <algorithm>
 
 #include "config.hpp"
 #include "easylogging++.h"
 #include "app.hpp"
+#include "MainLoopController.hpp"
 
 namespace Spirit
 {
@@ -30,41 +30,8 @@ namespace Spirit
 			LOG(FATAL) << "Failed to entry initial state!";
 		}
 
-		m_startupTimestamp = std::chrono::high_resolution_clock::now();
-		m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
-		m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
-
-		while (m_window.isOpen())
-		{
-			while (m_window.pollEvent(m_event))
-			{
-				onEvent(m_event);
-			}
-
-			for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
-			{
-				if (false == update())
-				{
-					return;
-				}
-				m_updateTimeout += DELAY_PER_UPDATE_FRAME;
-			}
-
-			//Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
-			if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
-				m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
-			}
-
-			if (getMicrosecondsFromStart() >= m_renderMinTimeout)
-			{
-				renderFrame();
-				m_renderMinTimeout = getMicrosecondsFromStart() + MIN_DELAY_PER_RENDER_FRAME;
-			}
-			else
-			{
-				wait();
-			}
-		}
+		MainLoopController l_controller(*this, m_window);
+		l_controller.run();
 	}
 
 	void App::onEvent(sf::Event p_event)
@@ -102,36 +69,16 @@ namespace Spirit
 		{
 			return setActiveState(l_futureStateId);
 		}
+		return true;
 	}
 
-	void App::wait() 
+	void App::renderFrame(const float p_dt)
 	{
-		 const uint64_t l_now = getMicrosecondsFromStart();
-
-		if (l_now < m_renderMinTimeout && l_now < m_updateTimeout)
-		{
-			auto l_delay = std::min(m_renderMinTimeout - l_now, m_updateTimeout - l_now);
-			std::this_thread::sleep_for(std::chrono::microseconds(l_delay));
-		}
-	}
-
-	void App::renderFrame()
-	{
-		//temporary
-		static uint64_t l_lastFrameRenderTime {getMicrosecondsFromStart()};
-		const float dt{(getMicrosecondsFromStart() - l_lastFrameRenderTime)/1000000.0f};
-		l_lastFrameRenderTime = getMicrosecondsFromStart();
-
 		m_window.clear();
-		(*m_currentState)->renderFrame(m_window, dt);
+		(*m_currentState)->renderFrame(m_window, p_dt);
 		m_window.setView(m_window.getDefaultView());
 		m_fpsCounter.render(m_window);
 		m_window.display();
-	}
-
-	uint64_t App::getMicrosecondsFromStart() const
-	{
-		return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - m_startupTimestamp).count();
 	}
 
 	void App::putState(std::unique_ptr<IAppState> p_appState, bool p_setActive)
