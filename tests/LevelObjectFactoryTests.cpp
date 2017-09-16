@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "resources.textures.hpp"
 #include "TextureContainer.hpp"
-#include "GameObjectFactory.hpp"
+#include "LevelObjectFactory.hpp"
 #include "PassiveTexturedRectangle.hpp"
 #include "Player.hpp"
 
@@ -15,7 +15,7 @@ TEST_CASE("should create suitable objects")
 		{ 
 			"flowerBox00", "passive-textured-rectangle", "idle", 50.0f, 50.0f, 0.0f 
 		};
-		const std::unique_ptr<IObject> l_passiveObject{ GameObjectFactory(l_textureContainer).createLevelObject(l_objectData) };	
+		const std::unique_ptr<ILevelObject> l_passiveObject{ LevelObjectFactory(l_textureContainer).createLevelObject(l_objectData) };	
 		auto l_rawPasiveObject{ dynamic_cast<const PassiveTexturedRectangle *> (l_passiveObject.get()) };
 
 		REQUIRE(nullptr != l_rawPasiveObject);
@@ -28,7 +28,7 @@ TEST_CASE("should create suitable objects")
 			"player01", "player", "idle", 200.0f, 100.0f, 0.0f 
 		};
 
-		const std::unique_ptr<IObject> l_player{ GameObjectFactory(l_textureContainer).createLevelObject(l_objectData) };
+		const std::unique_ptr<ILevelObject> l_player{ LevelObjectFactory(l_textureContainer).createLevelObject(l_objectData) };
 		auto l_rawPlayer{ dynamic_cast<const Player *> (l_player.get()) };
 
 		REQUIRE(nullptr != l_rawPlayer);

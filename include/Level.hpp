@@ -7,13 +7,13 @@
 #include "SFML/Graphics/RenderTexture.hpp"
 
 #include "config.hpp"
-#include "IObject.hpp"
+#include "ILevelObject.hpp"
 
 class Level
 {
 public:
 	using Dimension = std::pair<unsigned, unsigned>;
-	using Objects = std::list<std::unique_ptr<IObject>>;
+	using Objects = std::list<std::unique_ptr<ILevelObject>>;
 
 	Dimension getDimension();
 	void setDimension(Dimension p_dimension);

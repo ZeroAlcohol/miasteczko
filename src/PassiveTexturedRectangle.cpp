@@ -12,7 +12,7 @@ PassiveTexturedRectangle::~PassiveTexturedRectangle()
 
 }
 
-void PassiveTexturedRectangle::run()
+void PassiveTexturedRectangle::update()
 {
 
 }

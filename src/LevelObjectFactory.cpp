@@ -1,4 +1,4 @@
-#include "GameObjectFactory.hpp"
+#include "LevelObjectFactory.hpp"
 #include "Player.hpp"
 #include "PassiveTexturedRectangle.hpp"
 #include "resources.textures.hpp"
@@ -10,16 +10,16 @@ std::map<std::string, std::string> g_staticObjectsData
 	std::make_pair("bench00", rs::tx::bench)
 };
 
-GameObjectFactory::GameObjectFactory(const Spirit::ITextureProvider & p_textureProvider) :
+LevelObjectFactory::LevelObjectFactory(const Spirit::ITextureProvider & p_textureProvider) :
 	m_textureProvider { p_textureProvider },
 	m_levelObjectMapper
 	{
-        std::make_pair("player", &GameObjectFactory::createPlayer),
-        std::make_pair("passive-textured-rectangle", &GameObjectFactory::createPassiveTexturedRectangle)
+        std::make_pair("player", &LevelObjectFactory::createPlayer),
+        std::make_pair("passive-textured-rectangle", &LevelObjectFactory::createPassiveTexturedRectangle)
 	}
 {}
 
-std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData & p_data)
+std::unique_ptr<ILevelObject> LevelObjectFactory::createPlayer(const LevelObjectData & p_data)
 {
     sf::Sprite l_sprite(m_textureProvider.getTexture(rs::tx::player));
     Animation l_animation;
@@ -43,7 +43,7 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
     return std::move(l_player);
 }
 
-std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const LevelObjectData & p_data)
+std::unique_ptr<ILevelObject> LevelObjectFactory::createPassiveTexturedRectangle(const LevelObjectData & p_data)
 {
 	const std::string textureKey = g_staticObjectsData[p_data.id];
 	sf::Sprite l_sprite(m_textureProvider.getTexture(textureKey));
@@ -52,7 +52,7 @@ std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const
     return std::move(l_object);
 }
 
-std::unique_ptr<IObject> GameObjectFactory::createLevelObject(const LevelObjectData& p_data)
+std::unique_ptr<ILevelObject> LevelObjectFactory::createLevelObject(const LevelObjectData& p_data)
 {
     ObjectCreateMethod_t createFunction = m_levelObjectMapper[p_data.type];
 

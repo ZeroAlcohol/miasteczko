@@ -16,7 +16,7 @@ std::string Player::getName() const
     return m_name;
 }
 
-void Player::run()
+void Player::update()
 {
     float l_directionX{};
     float l_directionY{};

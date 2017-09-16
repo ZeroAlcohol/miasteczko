@@ -50,7 +50,7 @@ IAppState::AppStateCode Game::update(const float dt)
 {
     for (const auto& activeObject : m_level.getActiveObjects())
     {
-        activeObject->run();
+        activeObject->update();
     }
 
 	return m_currentAppState;

@@ -1,14 +1,14 @@
 #pragma once
 
 #include "SFML/Graphics.hpp"
-#include "IObject.hpp"
+#include "ILevelObject.hpp"
 
-class Text : public IObject
+class Text : public ILevelObject
 {
 public:
     Text(std::string p_text, int p_scale, sf::Color p_color, std::string p_font);
     ~Text();
-    void run() override;
+    void update() override;
     void render(sf::RenderWindow& p_window) override;
     void setText(const std::string p_text);
     void setPossition(float x, float y);

@@ -3,17 +3,17 @@
 #include <string>
 #include <memory>
 
-#include "IObject.hpp"
+#include "ILevelObject.hpp"
 #include "Animation.hpp"
 
-class Player : public IObject
+class Player : public ILevelObject
 {
 public:
     Player();
     Player(std::string p_name, Animation p_animation, unsigned p_speed);
     ~Player();
     std::string getName() const;
-    void run() override;
+    void update() override;
     void render(sf::RenderWindow& p_window) override;
     std::pair <float, float> getCenterCoordinates() const;
 	

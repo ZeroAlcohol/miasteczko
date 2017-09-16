@@ -13,7 +13,7 @@ Text::~Text()
 {
 }
 
-void Text::run()
+void Text::update()
 {
 
 }

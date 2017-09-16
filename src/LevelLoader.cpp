@@ -1,8 +1,7 @@
 #include <array>
 #include "easylogging++.h"
-#include "GameObjectFactory.hpp"
+#include "LevelObjectFactory.hpp"
 #include "LevelLoader.hpp"
-#include "Text.hpp"
 #include "resources.textures.hpp"
 
 constexpr unsigned g_tilesArrayHeight{ 32 };
@@ -122,7 +121,7 @@ std::pair <std::unique_ptr<sf::RenderTexture>, sf::Sprite> LevelLoader::loadBack
 	return make_pair(std::move(l_backgroundTexture), l_backgroundSrite);
 }
 
-bool LevelLoader::validateObjectsCollection(std::list<std::unique_ptr<IObject>> & p_objectsList) const
+bool LevelLoader::validateObjectsCollection(std::list<std::unique_ptr<ILevelObject>> & p_objectsList) const
 {
 	auto l_objectsIterator = std::find_if(p_objectsList.begin(), p_objectsList.end(), [](const auto& p) {return p == nullptr; });
 	
@@ -136,13 +135,13 @@ bool LevelLoader::validateObjectsCollection(std::list<std::unique_ptr<IObject>> 
 	return true;
 }
 
-std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const 
+std::list<std::unique_ptr<ILevelObject>> LevelLoader::loadPassiveObjects() const 
 {
-	std::list<std::unique_ptr<IObject>> l_loadedObjects;
+	std::list<std::unique_ptr<ILevelObject>> l_loadedObjects;
 
 	for (auto & objectData : g_passiveLevelObjectsData)
 	{
-		l_loadedObjects.push_back(GameObjectFactory(m_textureProvider).createLevelObject(objectData));
+		l_loadedObjects.push_back(LevelObjectFactory(m_textureProvider).createLevelObject(objectData));
 	}
 
 	validateObjectsCollection(l_loadedObjects);
@@ -150,13 +149,13 @@ std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const
 	return l_loadedObjects;
 }
 
-std::list<std::unique_ptr<IObject>> LevelLoader::loadActiveObjects() const 
+std::list<std::unique_ptr<ILevelObject>> LevelLoader::loadActiveObjects() const 
 {
-	std::list<std::unique_ptr<IObject>> l_loadedObjects;
+	std::list<std::unique_ptr<ILevelObject>> l_loadedObjects;
 
 	for (auto & objectData : g_activeLevelObjectsData)
 	{
-		l_loadedObjects.push_back(GameObjectFactory(m_textureProvider).createLevelObject(objectData));
+		l_loadedObjects.push_back(LevelObjectFactory(m_textureProvider).createLevelObject(objectData));
 	}
 
 	validateObjectsCollection(l_loadedObjects);
