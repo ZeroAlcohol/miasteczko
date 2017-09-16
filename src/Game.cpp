@@ -2,17 +2,18 @@
 #include "Game.hpp"
 #include "LevelLoader.hpp"
 
-Game::Game(const Spirit::ITextureProvider & p_textureProvider) : 
+Game::Game(const Spirit::AppStateCode p_id, const Spirit::ITextureProvider & p_textureProvider) :
+	m_id{ p_id },
 	m_isLoaded{ false },
 	m_textureProvider{ p_textureProvider }, 
-	m_currentAppState { IAppState::AppStateCode::Game }
+	m_currentAppState { p_id }
 {
 	
 }
 
 bool Game::onEntry()
 {
-	m_currentAppState = IAppState::AppStateCode::Game;
+	m_currentAppState = APP_STATE_CODE_GAME;
 	
 	if (false == m_isLoaded)
 	{
@@ -40,13 +41,13 @@ void Game::onEvent(sf::Event & p_event)
 		{
 
 		case sf::Keyboard::Escape:
-			m_currentAppState = AppStateCode::Menu;
+			m_currentAppState = APP_STATE_CODE_MENU;
 			break;
 		}
 	}
 }
 
-IAppState::AppStateCode Game::update(const float dt)
+Spirit::AppStateCode Game::update(const float dt)
 {
     for (const auto& activeObject : m_level.getActiveObjects())
     {
@@ -54,6 +55,11 @@ IAppState::AppStateCode Game::update(const float dt)
     }
 
 	return m_currentAppState;
+}
+
+Spirit::AppStateCode Game::getId() const
+{
+	return m_id;
 }
 
 void Game::renderFrame(sf::RenderWindow & p_window, const float dt)

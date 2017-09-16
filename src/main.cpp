@@ -1,13 +1,15 @@
-#include "config.hpp"
-#include <iostream>
 #include <easylogging++.h>
-#include <app.hpp>
-#include "CollisionBox.hpp"
+#include <iostream>
 
+#include "config.hpp"
+//#include "TextureContainer.hpp"
+#include "app.hpp"
+#include "Game.hpp"
+#include "Menu.hpp"
+#include "resources.textures.hpp"
+#include "TextureContainer.hpp"
 
 INITIALIZE_EASYLOGGINGPP
-
-using namespace std;
 
 void _main()
 {
@@ -18,7 +20,7 @@ void _main()
 	LOG(INFO) << "Application is running in debug mode";
 #endif
 
-	cout << R"banner( 
+	std::cout << R"banner( 
 	 ______  _                                 _          
 	|  ___ \(_)           _                   | |         
 	| | _ | |_  ____  ___| |_  ____ ____ _____| |  _ ___  
@@ -27,13 +29,38 @@ void _main()
 	|_||_||_|_|\_||_(___/ \___)____)____|_____)_| \_)___/
 			 
 			by ZeroAlcohol 2017 (WIP)
-    )banner" << endl;
+    )banner" << std::endl;
 
-	App app;
+	Spirit::TextureContainer l_textureContainer;
+	
+	l_textureContainer.putTexturesByKey({
+		rs::tx::tile::grass,
+		rs::tx::tile::pavementLeft,
+		rs::tx::tile::pavementRight,
+		rs::tx::tile::pavementTopLeft,
+		rs::tx::tile::pavementTop,
+		rs::tx::tile::pavementBottom,
+		rs::tx::tile::pavement,
+		rs::tx::tile::asphalt,
+		rs::tx::tile::pavementTopLeftIn
+	}, "tiles/");
+
+	l_textureContainer.putTexturesByKey({
+		rs::tx::flowerBox,
+		rs::tx::bench,
+		rs::tx::player
+	});
+
+	auto l_menu{ std::make_unique<Menu>(APP_STATE_CODE_MENU) };
+	auto l_game{ std::make_unique<Game>( APP_STATE_CODE_GAME, l_textureContainer) };
+	
+	Spirit::App l_app;
+	l_app.putState(std::move(l_menu), true);
+	l_app.putState(std::move(l_game));
 
 	LOG(DEBUG) << "App created";
 
-	app.run();
+	l_app.run();
 }
 
 #if defined WIN32 && defined NDEBUG 

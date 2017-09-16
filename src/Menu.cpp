@@ -2,8 +2,13 @@
 #include "config.hpp" 
 #include "Menu.hpp"
 
-Menu::Menu() : Play("Play", 100, sf::Color::White, XXX_FONT_SOURCE_PATH), Options("Options", 100, sf::Color::White, XXX_FONT_SOURCE_PATH),Exit("Exit", 100, sf::Color::White, XXX_FONT_SOURCE_PATH),
-                    m_currentState(State::Play), m_currentAppState(AppStateCode::Menu)
+Menu::Menu(const Spirit::AppStateCode p_id) : 
+	m_id{ p_id },
+	Play{ "Play", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
+	Options{ "Options", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
+	Exit{ "Exit", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
+	m_currentState(State::Play), 
+	m_currentAppState(p_id)
 {
 
 }
@@ -11,7 +16,7 @@ Menu::Menu() : Play("Play", 100, sf::Color::White, XXX_FONT_SOURCE_PATH), Option
 bool Menu::onEntry()
 {
 	setMenuState(State::Play);
-	m_currentAppState = AppStateCode::Menu;
+	m_currentAppState = m_id;
 	return true;
 }
 
@@ -42,11 +47,11 @@ void Menu::onEvent(sf::Event & p_event)
 			switch (m_currentState)
 			{
 			case State::Play:
-				m_currentAppState = AppStateCode::Game;
+				m_currentAppState = APP_STATE_CODE_GAME;
 				break;
 
 			case State::Exit:
-				m_currentAppState = AppStateCode::Exit;
+				m_currentAppState = Spirit::APP_STATE_CODE_EXIT;
 				break;
 			}
 		}
@@ -115,9 +120,14 @@ void Menu::setMenuState(State p_state)
 	}
 }
 
-IAppState::AppStateCode Menu::update(const float dt)
+Spirit::AppStateCode Menu::update(const float dt)
 {
 	return m_currentAppState;
+}
+
+Spirit::AppStateCode Menu::getId() const
+{
+	return m_id;
 }
 
 void Menu::renderFrame(sf::RenderWindow & p_window, const float dt)

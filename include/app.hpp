@@ -1,37 +1,40 @@
 #pragma once
 
 #include <chrono>
-#include <array>
-#include "TextureContainer.hpp"
-#include "Game.hpp"
-#include "Menu.hpp"
+#include <memory>
+#include <list>
+
+#include "IAppState.hpp"
 #include "FpsCounter.hpp"
 
-class App
+namespace Spirit
 {
+	class App
+	{
+	public:
+		App();
+		~App();
+		void run();
+		void putState(std::unique_ptr<IAppState> p_appState, bool p_setActive = false);
+		bool setActiveState(AppStateCode p_appStateCode);
 
-public:
-	using AppStateCode = IAppState::AppStateCode;
-	App();
-	~App();
-	void run();
+	private:
+		void renderFrame();
+		uint64_t getMicrosecondsFromStart() const;
+		void wait();
+		void onEvent(sf::Event p_event);
+		bool update();
 
-private:
-	void renderFrame();
-    uint64_t getMicrosecondsFromStart() const;
-	void wait();
-	void onEvent(sf::Event p_event);
-	void update();
+		std::chrono::high_resolution_clock::time_point m_startupTimestamp;
+		uint64_t m_updateTimeout;
+		uint64_t m_renderMinTimeout;
+		sf::RenderWindow m_window;
+		sf::Event m_event;
 
-	Spirit::TextureContainer m_textureProvider;
-	std::chrono::high_resolution_clock::time_point m_startupTimestamp;
-	uint64_t m_updateTimeout;
-	uint64_t m_renderMinTimeout;
-	sf::RenderWindow m_window;
-	sf::Event m_event;
-    Menu m_menu;
-	Game m_game{ m_textureProvider };
-    AppStateCode m_currentStateIndex;
-	std::array<IAppState *, 2> m_appStates { &m_menu, &m_game };
-	FpsCounter m_fpsCounter;
-};
+		using StatesList = std::list<std::unique_ptr<IAppState>>;
+		StatesList m_appStates;
+		StatesList::iterator m_currentState;
+
+		FpsCounter m_fpsCounter;
+	};
+}

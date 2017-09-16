@@ -11,6 +11,9 @@ constexpr uint64_t MIN_DELAY_PER_RENDER_FRAME{ 1000000ULL / GAME_MAX_FPS };
 constexpr unsigned WINDOW_WIDTH{ 1000 };
 constexpr unsigned WINDOW_HEIGHT{ 600 };
 
+constexpr unsigned APP_STATE_CODE_GAME{ 1 };
+constexpr unsigned APP_STATE_CODE_MENU{ 2 };
+
 #ifdef WIN32
 
 #include "config.win.hpp"
