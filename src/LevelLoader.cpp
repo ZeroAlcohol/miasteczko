@@ -1,9 +1,9 @@
 #include <array>
 #include "easylogging++.h"
-#include "TextureContainer.hpp"
 #include "GameObjectFactory.hpp"
 #include "LevelLoader.hpp"
 #include "Text.hpp"
+#include "resources.textures.hpp"
 
 constexpr unsigned g_tilesArrayHeight{ 32 };
 constexpr unsigned g_tilesArrayWidth{ 32 };
@@ -55,18 +55,19 @@ const std::array<const LevelObjectData, 1> g_activeLevelObjectsData
 	LevelObjectData{ "player01", "player", "idle", 200.0f, 100.0f, 0.0f}
 };
 
-LevelLoader::LevelLoader() : 
+LevelLoader::LevelLoader(const Spirit::ITextureProvider & p_textureProvider) : 
+	m_textureProvider{ p_textureProvider },
 	m_tilesMapper
 	{
-		std::make_pair(0, TextureContainer::getSprite(rs::tx::tile::grass)),
-		std::make_pair(2, TextureContainer::getSprite(rs::tx::tile::pavementLeft)),
-		std::make_pair(3, TextureContainer::getSprite(rs::tx::tile::pavementRight)),
-		std::make_pair(4, TextureContainer::getSprite(rs::tx::tile::asphalt)),
-		std::make_pair(5, TextureContainer::getSprite(rs::tx::tile::pavementTopLeft)),
-		std::make_pair(6, TextureContainer::getSprite(rs::tx::tile::pavementTop)),
-		std::make_pair(7, TextureContainer::getSprite(rs::tx::tile::pavementBottom)),
-		std::make_pair(8, TextureContainer::getSprite(rs::tx::tile::pavement)),
-		std::make_pair(9, TextureContainer::getSprite(rs::tx::tile::pavementTopLeftIn))
+		std::make_pair(0, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::grass))),
+		std::make_pair(2, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementLeft))),
+		std::make_pair(3, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementRight))),
+		std::make_pair(4, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::asphalt))),
+		std::make_pair(5, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementTopLeft))),
+		std::make_pair(6, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementTop))),
+		std::make_pair(7, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementBottom))),
+		std::make_pair(8, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavement))),
+		std::make_pair(9, sf::Sprite(m_textureProvider.getTexture(rs::tx::tile::pavementTopLeftIn)))
 	},
 	m_tileSize{ unsigned(m_tilesMapper[0].getTextureRect().width) }
 {
@@ -141,7 +142,7 @@ std::list<std::unique_ptr<IObject>> LevelLoader::loadPassiveObjects() const
 
 	for (auto & objectData : g_passiveLevelObjectsData)
 	{
-		l_loadedObjects.push_back(GameObjectFactory().createLevelObject(objectData));
+		l_loadedObjects.push_back(GameObjectFactory(m_textureProvider).createLevelObject(objectData));
 	}
 
 	validateObjectsCollection(l_loadedObjects);
@@ -155,7 +156,7 @@ std::list<std::unique_ptr<IObject>> LevelLoader::loadActiveObjects() const
 
 	for (auto & objectData : g_activeLevelObjectsData)
 	{
-		l_loadedObjects.push_back(GameObjectFactory().createLevelObject(objectData));
+		l_loadedObjects.push_back(GameObjectFactory(m_textureProvider).createLevelObject(objectData));
 	}
 
 	validateObjectsCollection(l_loadedObjects);

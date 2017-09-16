@@ -2,7 +2,10 @@
 #include "Game.hpp"
 #include "LevelLoader.hpp"
 
-Game::Game() : m_isLoaded{ false }, m_currentAppState{ IAppState::AppStateCode::Game }
+Game::Game(const Spirit::ITextureProvider & p_textureProvider) : 
+	m_isLoaded{ false },
+	m_textureProvider{ p_textureProvider }, 
+	m_currentAppState { IAppState::AppStateCode::Game }
 {
 	
 }
@@ -14,7 +17,7 @@ bool Game::onEntry()
 	if (false == m_isLoaded)
 	{
 		const std::string l_levelId = "level_id";
-		m_level = LevelLoader().load(l_levelId);
+		m_level = LevelLoader(m_textureProvider).load(l_levelId);
 		m_isLoaded = m_level.getId() == l_levelId;
 	}
 

@@ -5,15 +5,17 @@
 
 #include "LevelObjectData.hpp"
 #include "IObject.hpp"
+#include "ITextureProvider.hpp"
 
 
 class GameObjectFactory
 {
 public:
-	GameObjectFactory();
+	GameObjectFactory(const Spirit::ITextureProvider &);
 	std::unique_ptr<IObject> createLevelObject(const LevelObjectData& p_data);
 
 private:
+	const Spirit::ITextureProvider & m_textureProvider;
 	std::unique_ptr<IObject> createPlayer(const LevelObjectData& p_data);
 	std::unique_ptr<IObject> createPassiveTexturedRectangle(const LevelObjectData& p_data);
 

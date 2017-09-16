@@ -2,102 +2,52 @@
 #include "TextureContainer.hpp"
 #include "easylogging++.h"
 
-void TextureContainer::createResources()
+namespace Spirit
 {
-	const std::string basePath = TEXTURES_DIR;
-	TextureContainer & instance = TextureContainer::getInstance();
-	instance.putTexturesByKey({ 
-		rs::tx::tile::grass, 
-		rs::tx::tile::pavementLeft,
-		rs::tx::tile::pavementRight,
-		rs::tx::tile::pavementTopLeft,
-		rs::tx::tile::pavementTop, 
-		rs::tx::tile::pavementBottom,
-		rs::tx::tile::pavement,
-		rs::tx::tile::asphalt, 
-		rs::tx::tile::pavementTopLeftIn
-		}, "tiles/");
+	sf::Texture TextureContainer::defaultTexture;
 
-	instance.putTexturesByKey({ 
-		rs::tx::flowerBox,
-        rs::tx::bench,
-        rs::tx::player
-
-		});
-}
-
-sf::Texture &TextureContainer::getTexture(std::string p_name)
-{
-
-#ifndef NDEBUG
-	try
+	const sf::Texture &TextureContainer::getTexture(const std::string p_name) const
 	{
-		return TextureContainer::getInstance().m_textureMap.at(p_name);
+		try
+		{
+			return m_textureMap.at(p_name);
+		}
+		catch (const std::out_of_range & oor) {
+			LOG(ERROR) << oor.what() << " (key: " << p_name << ")";
+			return TextureContainer::defaultTexture;
+		}
 	}
-	catch (const std::out_of_range & oor) {
-		LOG(ERROR) << oor.what() << " (key: " << p_name << ")";
-		return defaultTexture;
-	}
-#else
-    return TextureContainer::getInstance().m_textureMap[p_name];
-#endif
-}
 
-void TextureContainer::putTexturesByKey(std::initializer_list<const std::string> p_keys, const std::string p_path, const std::string p_format)
-{
-	for (const std::string & p_key : p_keys)
+	void TextureContainer::putTexturesByKey(std::initializer_list<const std::string> p_keys, const std::string p_path, const std::string p_format)
 	{
-		putTextureByKey(p_key, p_path, p_format);
+		for (const std::string & p_key : p_keys)
+		{
+			putTextureByKey(p_key, p_path, p_format);
+		}
 	}
-}
 
-void TextureContainer::putTextureByKey(const std::string p_key, const std::string p_path, const std::string p_format)
-{
-	const std::string basePath = TEXTURES_DIR;
-	putTexture(p_key, basePath + p_path + p_key + "." + p_format);
-}
-
-void TextureContainer::putTexture(std::string p_name, std::string p_addressImage)
-{
-    sf::Texture l_texture;
-	if (l_texture.loadFromFile(p_addressImage))
+	void TextureContainer::putTextureByKey(const std::string p_key, const std::string p_path, const std::string p_format)
 	{
-		// TODO check if alredy exists
-		TextureContainer::getInstance().m_textureMap.emplace(std::make_pair(p_name, l_texture));
-		sf::Sprite l_sprite;
-		l_sprite.setTexture(TextureContainer::getInstance().m_textureMap[p_name]);
-		TextureContainer::getInstance().m_spriteMap.emplace(std::make_pair(p_name, l_sprite));
+		const std::string basePath = TEXTURES_DIR;
+		putTexture(p_key, basePath + p_path + p_key + "." + p_format);
 	}
-	else
+
+	void TextureContainer::putTexture(std::string p_name, std::string p_addressImage)
 	{
-		LOG(ERROR) << "Failed to load resource, name: " << p_name << ", adress: " << p_addressImage;
+		sf::Texture l_texture;
+		if (l_texture.loadFromFile(p_addressImage))
+		{
+			// TODO check if alredy exists
+			m_textureMap.emplace(std::make_pair(p_name, l_texture));
+		}
+		else
+		{
+			LOG(ERROR) << "Failed to load resource, name: " << p_name << ", adress: " << p_addressImage;
+		}
 	}
-}
 
-sf::Sprite& TextureContainer::getSprite(std::string p_name)
-{
-	// TODO fix returning address of local variable or temporary
-
-#ifndef NDEBUG
-	try
+	TextureContainer::TextureContainer(std::initializer_list<const std::string> p_keys, const std::string p_path, const std::string p_format)
 	{
-		return TextureContainer::getInstance().m_spriteMap.at(p_name);
+		putTexturesByKey(p_keys, p_path, p_format);
 	}
-	catch (const std::out_of_range & oor) {
-		LOG(ERROR) << oor.what()<< " (key: "<<p_name<<")";
-		return TextureContainer::getInstance().defaultSprite;
-	}
-#else
-    return TextureContainer::getInstance().m_spriteMap[p_name];
-#endif // !NDEBUG
-}
-
-TextureContainer &TextureContainer::getInstance()
-{
-    static TextureContainer instance{};
-    return instance;
-}
-
-TextureContainer::~TextureContainer()
-{
 }

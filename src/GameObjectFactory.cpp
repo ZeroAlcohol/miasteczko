@@ -1,7 +1,7 @@
 #include "GameObjectFactory.hpp"
-#include "TextureContainer.hpp"
 #include "Player.hpp"
 #include "PassiveTexturedRectangle.hpp"
+#include "resources.textures.hpp"
 
 std::map<std::string, std::string> g_staticObjectsData
 {
@@ -10,7 +10,8 @@ std::map<std::string, std::string> g_staticObjectsData
 	std::make_pair("bench00", rs::tx::bench)
 };
 
-GameObjectFactory::GameObjectFactory() :
+GameObjectFactory::GameObjectFactory(const Spirit::ITextureProvider & p_textureProvider) :
+	m_textureProvider { p_textureProvider },
 	m_levelObjectMapper
 	{
         std::make_pair("player", &GameObjectFactory::createPlayer),
@@ -20,7 +21,7 @@ GameObjectFactory::GameObjectFactory() :
 
 std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData & p_data)
 {
-    sf::Sprite l_sprite = TextureContainer::getSprite(rs::tx::player);
+    sf::Sprite l_sprite(m_textureProvider.getTexture(rs::tx::player));
     Animation l_animation;
     l_animation.setTexture(*l_sprite.getTexture());
     l_animation.addFrame(sf::IntRect(0, 0, 152, 252));
@@ -45,7 +46,7 @@ std::unique_ptr<IObject> GameObjectFactory::createPlayer(const LevelObjectData &
 std::unique_ptr<IObject> GameObjectFactory::createPassiveTexturedRectangle(const LevelObjectData & p_data)
 {
 	const std::string textureKey = g_staticObjectsData[p_data.id];
-	sf::Sprite l_sprite = TextureContainer::getSprite(textureKey);
+	sf::Sprite l_sprite(m_textureProvider.getTexture(textureKey));
 	std::unique_ptr<PassiveTexturedRectangle> l_object = std::make_unique<PassiveTexturedRectangle>(p_data.x, p_data.y, p_data.rotation, l_sprite);
 
     return std::move(l_object);

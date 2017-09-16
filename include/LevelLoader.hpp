@@ -1,14 +1,16 @@
 #pragma once
 
 #include "Level.hpp"
+#include "ITextureProvider.hpp"
 
 class LevelLoader
 {
 public:
-	LevelLoader();
+	LevelLoader(const Spirit::ITextureProvider & );
 	Level load(const std::string p_id);
 
 private:
+	const Spirit::ITextureProvider & m_textureProvider;
 	std::list<std::unique_ptr<IObject>> loadPassiveObjects() const;
 	std::list<std::unique_ptr<IObject>> loadActiveObjects() const;
 	bool validateObjectsCollection(std::list<std::unique_ptr<IObject>> & p_objectsList) const;

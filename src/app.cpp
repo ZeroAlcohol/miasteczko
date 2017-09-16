@@ -2,13 +2,30 @@
 #include <algorithm>
 #include "config.hpp"
 #include "easylogging++.h"
-#include "TextureContainer.hpp"
+#include "resources.textures.hpp"
 #include "app.hpp"
 
 App::App() : m_currentStateIndex(IAppState::AppStateCode::Menu)
 {
 	m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game");
-	TextureContainer::createResources();
+	
+	m_textureProvider.putTexturesByKey({
+		rs::tx::tile::grass,
+		rs::tx::tile::pavementLeft,
+		rs::tx::tile::pavementRight,
+		rs::tx::tile::pavementTopLeft,
+		rs::tx::tile::pavementTop,
+		rs::tx::tile::pavementBottom,
+		rs::tx::tile::pavement,
+		rs::tx::tile::asphalt,
+		rs::tx::tile::pavementTopLeftIn
+	}, "tiles/");
+
+	m_textureProvider.putTexturesByKey({
+		rs::tx::flowerBox,
+		rs::tx::bench,
+		rs::tx::player
+	});
 }
 
 App::~App()

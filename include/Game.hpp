@@ -1,12 +1,13 @@
 #pragma once
 
-#include <IAppState.hpp>
-#include <Level.hpp>
+#include "IAppState.hpp"
+#include "ITextureProvider.hpp" 
+#include "Level.hpp"
 
 class Game : public IAppState
 {
 public:
-    Game();
+    Game(const Spirit::ITextureProvider &);
 	virtual bool onEntry() final;
 	virtual bool onQuit() final;
 	virtual void onEvent(sf::Event & p_event) final;
@@ -15,6 +16,7 @@ public:
 
 private:
 	bool m_isLoaded;
+	const Spirit::ITextureProvider & m_textureProvider;
 	Level m_level;
 	IAppState::AppStateCode m_currentAppState;
 };
