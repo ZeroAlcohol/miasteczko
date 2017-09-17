@@ -7,15 +7,15 @@ sf::View Level::getLevelView()
 
     if (l_player == nullptr)
     {
-        return sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+        return sf::View(sf::FloatRect(0, 0, Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
     }
 
     auto l_coords = l_player->getCenterCoordinates();
 
-    float l_rectLeft {std::max(0.0f, std::min(l_coords.first - WINDOW_WIDTH * 0.5f, static_cast<float>(m_dimension.first - WINDOW_WIDTH)))};
-    float l_rectTop {std::max(0.0f, std::min(l_coords.second - WINDOW_HEIGHT * 0.5f, static_cast<float>(m_dimension.second - WINDOW_HEIGHT)))};
+    float l_rectLeft {std::max(0.0f, std::min(l_coords.first - Config::WINDOW_WIDTH * 0.5f, static_cast<float>(m_dimension.first - Config::WINDOW_WIDTH)))};
+    float l_rectTop {std::max(0.0f, std::min(l_coords.second - Config::WINDOW_HEIGHT * 0.5f, static_cast<float>(m_dimension.second - Config::WINDOW_HEIGHT)))};
 
-    return sf::View(sf::FloatRect(l_rectLeft, l_rectTop, WINDOW_WIDTH, WINDOW_HEIGHT));
+    return sf::View(sf::FloatRect(l_rectLeft, l_rectTop, Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT));
 }
 
 Level::Dimension Level::getDimension()

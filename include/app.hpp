@@ -18,7 +18,7 @@ namespace Spirit
 		bool setActiveState(AppStateCode p_appStateCode);
 		void renderFrame(const float p_dt);
 		void onEvent(sf::Event p_event);
-		bool update();
+		bool update(const float dt);
 
 	private:
 		sf::RenderWindow m_window;

@@ -28,7 +28,7 @@ namespace Spirit
 
 	void TextureContainer::putTextureByKey(const std::string p_key, const std::string p_path, const std::string p_format)
 	{
-		const std::string basePath = TEXTURES_DIR;
+		const std::string basePath = Config::TEXTURES_DIR;
 		putTexture(p_key, basePath + p_path + p_key + "." + p_format);
 	}
 

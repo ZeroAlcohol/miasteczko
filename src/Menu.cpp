@@ -4,9 +4,9 @@
 
 Menu::Menu(const Spirit::AppStateCode p_id) : 
 	m_id{ p_id },
-	Play{ "Play", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
-	Options{ "Options", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
-	Exit{ "Exit", 100, sf::Color::White, XXX_FONT_SOURCE_PATH },
+	Play{ "Play", 100, sf::Color::White, Config::XXX_FONT_SOURCE_PATH },
+	Options{ "Options", 100, sf::Color::White, Config::XXX_FONT_SOURCE_PATH },
+	Exit{ "Exit", 100, sf::Color::White, Config::XXX_FONT_SOURCE_PATH },
 	m_currentState(State::Play), 
 	m_currentAppState(p_id)
 {
@@ -47,7 +47,7 @@ void Menu::onEvent(sf::Event & p_event)
 			switch (m_currentState)
 			{
 			case State::Play:
-				m_currentAppState = APP_STATE_CODE_GAME;
+				m_currentAppState = Config::APP_STATE_CODE_GAME;
 				break;
 
 			case State::Exit:

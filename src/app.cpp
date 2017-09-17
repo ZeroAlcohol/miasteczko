@@ -1,5 +1,3 @@
-//#include <algorithm>
-
 #include "config.hpp"
 #include "easylogging++.h"
 #include "app.hpp"
@@ -10,7 +8,7 @@ namespace Spirit
 	App::App()
 	{
 		m_currentState = m_appStates.end();
-		m_window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Game");
+		m_window.create(sf::VideoMode(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT), "Game");
 	}
 
 	App::~App()
@@ -62,9 +60,9 @@ namespace Spirit
 		(*m_currentState)->onEvent(p_event);
 	}
 
-	bool App::update()
+	bool App::update(const float dt)
 	{
-		const AppStateCode l_futureStateId = (*m_currentState)->update(DELAY_PER_UPDATE_FRAME_SEC);
+		const AppStateCode l_futureStateId = (*m_currentState)->update(dt);
 		if (l_futureStateId != (*m_currentState)->getId())
 		{
 			return setActiveState(l_futureStateId);

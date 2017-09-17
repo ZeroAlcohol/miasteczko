@@ -13,7 +13,7 @@ INITIALIZE_EASYLOGGINGPP
 
 void _main()
 {
-	el::Loggers::reconfigureAllLoggers(el::Configurations(EASYLOGGINGPP_CONFIG));
+	el::Loggers::reconfigureAllLoggers(el::Configurations(Config::EASYLOGGINGPP_CONFIG));
 	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
 
 #ifndef NDEBUG
@@ -51,8 +51,8 @@ void _main()
 		rs::tx::player
 	});
 
-	auto l_menu{ std::make_unique<Menu>(APP_STATE_CODE_MENU) };
-	auto l_game{ std::make_unique<Game>( APP_STATE_CODE_GAME, l_textureContainer) };
+	auto l_menu{ std::make_unique<Menu>(Config::APP_STATE_CODE_MENU) };
+	auto l_game{ std::make_unique<Game>(Config::APP_STATE_CODE_GAME, l_textureContainer) };
 	
 	Spirit::App l_app;
 	l_app.putState(std::move(l_menu), true);

@@ -3,6 +3,10 @@
 #include "MainLoopController.hpp"
 #include "config.hpp"
 
+constexpr uint64_t DELAY_PER_UPDATE_FRAME{ 1000000ULL / Config::GAME_TARGET_UPS };
+constexpr float DELAY_PER_UPDATE_FRAME_SEC{ 1.0f / Config::GAME_TARGET_UPS };
+constexpr uint64_t MIN_DELAY_PER_RENDER_FRAME{ 1000000ULL / Config::GAME_MAX_FPS };
+
 namespace Spirit
 {
 	MainLoopController::MainLoopController(App & p_app, sf::RenderWindow & p_window) : 
@@ -22,9 +26,9 @@ namespace Spirit
 				m_app.onEvent(m_event);
 			}
 
-			for (auto i = 0; i < MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
+			for (auto i = 0; i < Config::MAX_FRAMESKIP && getMicrosecondsFromStart() > m_updateTimeout; ++i)
 			{
-				if (false == m_app.update())
+				if (false == m_app.update(DELAY_PER_UPDATE_FRAME_SEC))
 				{
 					return;
 				}
@@ -32,7 +36,7 @@ namespace Spirit
 			}
 
 			//Prevent accumulating more than 1 second of game updates (can happen in severe frame drops or breakpoints while debugging)
-			if (getMicrosecondsFromStart() > m_updateTimeout + GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
+			if (getMicrosecondsFromStart() > m_updateTimeout + Config::GAME_TARGET_UPS*DELAY_PER_UPDATE_FRAME) {
 				m_updateTimeout = getMicrosecondsFromStart() + DELAY_PER_UPDATE_FRAME;
 			}
 

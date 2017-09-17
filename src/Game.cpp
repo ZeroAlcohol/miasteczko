@@ -13,7 +13,7 @@ Game::Game(const Spirit::AppStateCode p_id, const Spirit::ITextureProvider & p_t
 
 bool Game::onEntry()
 {
-	m_currentAppState = APP_STATE_CODE_GAME;
+	m_currentAppState = m_id;
 	
 	if (false == m_isLoaded)
 	{
@@ -41,7 +41,7 @@ void Game::onEvent(sf::Event & p_event)
 		{
 
 		case sf::Keyboard::Escape:
-			m_currentAppState = APP_STATE_CODE_MENU;
+			m_currentAppState = Config::APP_STATE_CODE_MENU;
 			break;
 		}
 	}
