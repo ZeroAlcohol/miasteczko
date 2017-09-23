@@ -109,7 +109,7 @@ namespace Spirit
 			quitApp = true;
 		}
 
-		for (auto & mapIterator = m_appStates.begin(); mapIterator != m_appStates.end(); ++mapIterator)
+		for (auto&& mapIterator = m_appStates.begin(); mapIterator != m_appStates.end(); ++mapIterator)
 		{
 			if (p_appStateCode == (*mapIterator)->getId())
 			{
