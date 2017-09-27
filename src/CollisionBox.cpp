@@ -136,6 +136,15 @@ bool CollisionBox::detectCollision(const CollisionBox& p_a)
 	return false;
 }
 
+void CollisionBox::translate(std::pair<float, float> p_translationVector)
+{
+	for (int i = 0; i < m_points.size(); i++)
+	{
+		m_points[i].first += p_translationVector.first;
+		m_points[i].second += p_translationVector.second;
+	}
+}
+
 
 bool CollisionBox::collisionCircleCircle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
@@ -195,3 +204,4 @@ bool CollisionBox::collisionRectangleRectangle(const CollisionBox& p_a, const Co
 	}
 	return false;
 }
+

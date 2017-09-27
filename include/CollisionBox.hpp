@@ -16,8 +16,8 @@ public:
     CollisionBox(std::vector<Point> p_points);
 
 	float calculateRadius() const;//only for circle
-
     bool detectCollision(const CollisionBox& p_a);
+	void translate(std::pair<float, float> p_translationVector);
 
 private:
 	std::vector<Point> m_points; //in case of circle one point is center second point is one from edge
