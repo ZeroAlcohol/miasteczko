@@ -18,7 +18,7 @@ public:
 
 	float calculateRadius() const;//only for circle
     bool detectCollision(const CollisionBox& p_a);
-	void translate(std::pair<float, float> p_translationVector);
+	void translate(Point p_translationVector);
 	void rotate(float angle);
 private:
 	const float M_PI = 3.1415926535897932384626;
