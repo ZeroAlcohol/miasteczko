@@ -43,6 +43,7 @@ bin-tests
 # cmake
 Cmake*
 cmake*
+*.cmake
 !CMakeLists.txt
 !cmake_modules
 
@@ -52,6 +53,13 @@ cmake*
 *sdf
 *sln
 *VC.opendb
+*.db
+.vs
+*.dir
 
 #SFML Library (default folder name)
 SFML-2.4.2/*
+
+
+
+
