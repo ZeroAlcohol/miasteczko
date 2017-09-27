@@ -145,6 +145,20 @@ void CollisionBox::translate(std::pair<float, float> p_translationVector)
 	}
 }
 
+void CollisionBox::rotate(float angle)
+{
+	if (m_figureType == FigureType::circle)
+	{
+		//do nothing in general, circle is the same no matter what happens
+	}
+
+	if (m_figureType == FigureType::rectangle)
+	{
+		rotateRectangle(angle);
+	}
+}
+
+
 
 bool CollisionBox::collisionCircleCircle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
@@ -205,3 +219,23 @@ bool CollisionBox::collisionRectangleRectangle(const CollisionBox& p_a, const Co
 	return false;
 }
 
+void CollisionBox::rotateRectangle(float angle) //angle in degrees
+{
+	for (int i = 0; i < 4; i++)
+	{
+	Point center;
+	center.first = m_points[0].first + 0.5 * (m_points[2].first - m_points[0].first);
+	center.second = m_points[0].second + 0.5 * (m_points[2].second - m_points[0].second);
+
+
+	m_points[i].first -= center.first;
+	m_points[i].second -= center.second;
+
+	float angleRad = angle * M_PI / 180;
+	m_points[i].first = m_points[i].first * cos(angleRad) - m_points[i].second * sin(angleRad);
+	m_points[i].second = m_points[i].second * cos(angleRad) + m_points[i].first * sin(angleRad);
+
+	m_points[i].first += center.first;
+	m_points[i].second += center.second;
+	}
+}

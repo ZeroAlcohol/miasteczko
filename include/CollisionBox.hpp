@@ -2,7 +2,8 @@
 
 #include <tuple>
 #include <vector>
-#include <cmath>
+#include <math.h>
+#define _USE_MATH_DEFINES
 
 
 class CollisionBox
@@ -18,8 +19,9 @@ public:
 	float calculateRadius() const;//only for circle
     bool detectCollision(const CollisionBox& p_a);
 	void translate(std::pair<float, float> p_translationVector);
-
+	void rotate(float angle);
 private:
+	const float M_PI = 3.1415926535897932384626;
 	std::vector<Point> m_points; //in case of circle one point is center second point is one from edge
     FigureType m_figureType;
 
@@ -30,5 +32,6 @@ private:
 	bool collisionCircleRectangle(const CollisionBox& p_a, const CollisionBox& p_b);
 	bool collisionRectangleRectangle(const CollisionBox& p_a, const CollisionBox& p_b);
 
+	void rotateRectangle(float angle); //angle in degrees
 };
 
