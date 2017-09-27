@@ -52,7 +52,7 @@ float CollisionBox::distancePointLine(const Point& p_point, const Point& p_line1
 
 	if ( (x > p_line1.first && x < p_line2.first)  || (x < p_line1.first && x > p_line2.first))
 	{
-		return distancePointPoint(p_point, std::pair<float, float>(x, y));
+		return distancePointPoint(p_point, Point(x, y));
 	}
 	
 	float dist1 = distancePointPoint(p_point, p_line1);
@@ -136,7 +136,7 @@ bool CollisionBox::detectCollision(const CollisionBox& p_a)
 	return false;
 }
 
-void CollisionBox::translate(std::pair<float, float> p_translationVector)
+void CollisionBox::translate(Point p_translationVector)
 {
 	for (int i = 0; i < m_points.size(); i++)
 	{
