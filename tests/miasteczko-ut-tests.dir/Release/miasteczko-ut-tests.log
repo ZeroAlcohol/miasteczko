@@ -1,0 +1,28 @@
+﻿  CollisionBoxTests.cpp
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\utility(172): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  D:\ZeroAlcohol\miasteczko\miasteczko\tests\CollisionBoxTests.cpp(7): note: see reference to function template instantiation 'std::pair<float,float>::pair<int,int,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=int
+          ]
+  D:\ZeroAlcohol\miasteczko\miasteczko\tests\CollisionBoxTests.cpp(7): note: see reference to function template instantiation 'std::pair<float,float>::pair<int,int,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\utility(172): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  D:\ZeroAlcohol\miasteczko\miasteczko\tests\CollisionBoxTests.cpp(8): note: see reference to function template instantiation 'std::pair<float,float>::pair<double,double,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=double,
+              _Other2=double
+          ]
+  D:\ZeroAlcohol\miasteczko\miasteczko\tests\CollisionBoxTests.cpp(8): note: see reference to function template instantiation 'std::pair<float,float>::pair<double,double,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=double,
+              _Other2=double
+          ]
+  miasteczko-ut-tests.vcxproj -> D:\ZeroAlcohol\miasteczko\miasteczko\bin-tests\Release\miasteczko-ut-tests.exe

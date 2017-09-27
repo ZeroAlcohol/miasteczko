@@ -35,37 +35,66 @@ float CollisionBox::distancePointLine(const Point& p_point, const Point& p_line1
 
 	if (p_line2.first == p_line1.first)
 	{
-		return p_line2.first - p_point.first;
+		return p_line2.second - p_point.second;
 	}
 
-	//ax+by+c = 0
-	const float a{ (p_line2.second - p_line1.second) / (p_line2.first - p_line1.first) };
-	const float b {-1};
-	const float c { p_line1.second - a*p_line1.first };
+	//y = a1 * x + b1 - line made of 2 points
+	float a1 = (p_line2.second - p_line1.second) / (p_line2.first - p_line1.first);
+	float b1 = p_line2.second - a1 * p_line2.first;
 
-	return std::abs(a*p_point.first + b*p_point.second + c) / (sqrt(a*a + b*b));
+	//y = a2 * x + b2 - line normal to previously calculated 
+	float a2 = (-1 / a1);
+	float b2 = p_point.second - a2 * p_point.first;
 
+	//cross point of lines
+	float x = (b2 - b1) / (a1 - a2);
+	float y = a1 * x + b1;
+
+	if ( (x > p_line1.first && x < p_line2.first)  || (x < p_line1.first && x > p_line2.first))
+	{
+		return distancePointPoint(p_point, std::pair<float, float>(x, y));
+	}
+	
+	float dist1 = distancePointPoint(p_point, p_line1);
+	float dist2 = distancePointPoint(p_point, p_line1);
+
+	return (dist1 < dist2) ? dist1 : dist2;
 }
 
 bool CollisionBox::pointBetweenLines(const Point& p_point, const Point& p_lineA1, const Point& p_lineA2, const Point& p_lineB1, const Point& p_lineB2) const
 {
-	const float aA{ (p_lineA2.second - p_lineA1.second) / (p_lineA2.first - p_lineA1.first) };
-	const float bA{ p_lineA1.second - aA*p_lineA1.first };
-
-	const float aB{(p_lineB2.second - p_lineB1.second) / (p_lineB2.first - p_lineB1.first)};
-	const float bB{ p_lineB1.second - aA*p_lineB1.first };
-
-	if (aA*p_point.first + bA < p_point.second)
+	if (p_lineA2.first == p_lineA1.first)
 	{
-		if (aB*p_point.first + bB > p_point.second)
+		if (p_lineA2.first > p_point.first &&  p_lineB2.first < p_point.first)
+		{
+			return true;
+		}
+
+		if (p_lineA2.first < p_point.first &&  p_lineB2.first > p_point.first)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	float aA = (p_lineA2.second - p_lineA1.second) / (p_lineA2.first - p_lineA1.first);
+	float bA = p_lineA1.second - aA * p_lineA1.first;
+
+	float aB = (p_lineB2.second - p_lineB1.second) / (p_lineB2.first - p_lineB1.first);
+	float bB = p_lineB1.second - aB * p_lineB1.first;
+
+	if (aA * p_point.first + bA < p_point.second)
+	{
+		if (aB * p_point.first + bB > p_point.second)
 		{
 			return true;
 		}
 	}
 
-	if (aB*p_point.first + bB < p_point.second)
+	if (aB * p_point.first + bB < p_point.second)
 	{
-		if (aA*p_point.first + bA > p_point.second)
+		if (aA * p_point.first + bA > p_point.second)
 		{
 			return true;
 		}
@@ -123,13 +152,6 @@ bool CollisionBox::collisionCircleCircle(const CollisionBox& p_a, const Collisio
 bool CollisionBox::collisionCircleRectangle(const CollisionBox& p_a, const CollisionBox& p_b)
 {
 	float l_circleRadius = p_a.calculateRadius();
-	for (int i = 0; i < 3; i++)
-	{
-		if (distancePointPoint(p_a.m_points[0], p_b.m_points[i]) < l_circleRadius)
-		{
-			return true;
-		}
-	}
 
 	for (int i = 0; i < 2; i++)
 	{
@@ -161,5 +183,15 @@ bool CollisionBox::collisionRectangleRectangle(const CollisionBox& p_a, const Co
 		}
 	}
 
+	for (int i = 0; i < 3; i++)
+	{
+		if (pointBetweenLines(p_b.m_points[i], p_a.m_points[0], p_a.m_points[1], p_a.m_points[2], p_a.m_points[3]))
+		{
+			if (pointBetweenLines(p_b.m_points[i], p_a.m_points[1], p_a.m_points[2], p_a.m_points[3], p_a.m_points[0]))
+			{
+				return true;
+			}
+		}
+	}
 	return false;
 }
